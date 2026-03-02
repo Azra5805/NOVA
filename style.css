@@ -1,0 +1,3653 @@
+/* 1. SIFIRLAMA (RESET) */
+/* Tarayıcıların varsayılan boşluklarını siliyoruz */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* Padding ekleyince kutu büyümesin diye */
+}
+
+/* 2. GENEL AYARLAR */
+body {
+    background-color: #fafafa;
+    /* Instagram'ın hafif gri arka planı */
+    font-family: 'Roboto', sans-serif;
+    /* Google Fonts'tan çektiğimiz yazı tipi */
+}
+
+/* 3. NAVBAR KUTUSU (DIŞ KABUK) */
+.navbar {
+    position: fixed;
+    /* Sayfa kaydırılsa bile üstte sabit kalsın */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: #ffffff;
+    border-bottom: 1px solid #dbdbdb;
+    /* Altına ince gri çizgi */
+    display: flex;
+    justify-content: center;
+    /* İçindekileri ortala */
+    align-items: center;
+    z-index: 100;
+    /* Diğer her şeyin üstünde dursun */
+}
+
+/* 4. NAVBAR İÇERİĞİ (ORTADAKİ KISIM) */
+.nav-wrapper {
+    width: 70%;
+    max-width: 975px;
+    /* Instagram masaüstünde bu genişliği kullanır */
+    display: flex;
+    justify-content: space-between;
+    /* Logo sola, Arama ortaya, İkonlar sağa */
+    align-items: center;
+    padding: 0 20px;
+}
+
+/* 5. LOGO AYARI */
+.brand-img {
+    height: 29px;
+    /* Logonun boyutu */
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+/* 6. ARAMA KUTUSU */
+.search-box {
+    width: 250px;
+    height: 36px;
+    background: #efefef;
+    border: none;
+    border-radius: 8px;
+    /* Köşeleri yuvarlat */
+    padding: 0 16px;
+    outline: none;
+    font-size: 14px;
+    color: #262626;
+    text-align: center;
+    /* Yazıyı ortala (Instagram stili) */
+}
+
+/* 7. SAĞDAKİ İKONLAR */
+.nav-items {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    /* İkonlar arası boşluk */
+}
+
+.nav-items i {
+    font-size: 24px;
+    /* İkon boyutu */
+    color: #000;
+    cursor: pointer;
+    transition: transform 0.2s;
+    /* Üzerine gelince animasyon olsun */
+}
+
+/* İkonun üzerine gelince hafif büyüsün */
+.nav-items i:hover {
+    transform: scale(1.1);
+}
+
+/* Profil Resmi */
+.user-profile img {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    /* Tam yuvarlak yap */
+    cursor: pointer;
+    border: 1px solid #dbdbdb;
+}
+
+/* --- ANA GÖVDE AYARLARI --- */
+.main {
+    width: 100%;
+    padding: 20px 0;
+    display: flex;
+    /* İçindekileri yan yana diz */
+    justify-content: center;
+    /* Ortala */
+    margin-top: 50px;
+    /* Navbar'ın altında kalmasın diye boşluk */
+}
+
+.wrapper {
+    width: 70%;
+    max-width: 975px;
+    display: flex;
+    justify-content: center;
+    /* Şimdilik sadece sol sütunu ortalayalım */
+}
+
+.left-col {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 470px;
+    /* Instagram'da post genişliği genelde budur */
+}
+
+/* --- POST KARTI TASARIMI (Burası Çok Önemli) --- */
+.post {
+    width: 100%;
+    background: #fff;
+    border: 1px solid #dbdbdb;
+    /* Postun etrafındaki gri çizgi */
+    border-radius: 8px;
+    margin-bottom: 20px;
+    /* Postlar arası boşluk */
+}
+
+/* Postun Üst Kısmı (Profil fotosu ve isim) */
+.info {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    /* İsim solda, üç nokta sağda */
+    align-items: center;
+    padding: 0 15px;
+}
+
+.info .user {
+    display: flex;
+    align-items: center;
+}
+
+.info .profile-pic {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    /* Yuvarlak yap */
+    object-fit: cover;
+    /* Resmi ezmeden sığdır */
+    margin-right: 10px;
+    border: 1px solid #dbdbdb;
+}
+
+.info .username {
+    font-weight: bold;
+    color: #262626;
+    font-size: 14px;
+}
+
+/* Post Resmi */
+.post-image {
+    width: 100%;
+    height: auto;
+    /* Resim orijinal boyutuna göre uzasın */
+    display: block;
+}
+
+/* Postun Alt Kısmı (Butonlar ve Açıklama) */
+.post-content {
+    width: 100%;
+    padding: 15px;
+}
+
+.reaction-wrapper {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.reaction-wrapper i {
+    font-size: 24px;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.likes {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.description {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.description span {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.post-time {
+    font-size: 10px;
+    color: #8e8e8e;
+    text-transform: uppercase;
+}
+
+/* --- SAĞ SÜTUN AYARLARI --- */
+.right-col {
+    padding: 20px;
+    /*position: fixed; /* Sayfaya yapışık kalsın */
+    right: 15%;
+    /* Konumu ayarla (ekran boyutuna göre değişebilir) */
+    top: 80px;
+    /* Navbar'ın altından başlasın */
+    width: 320px;
+}
+
+/* Profil ve Öneri Kartları */
+.profile-card,
+.suggestion-card {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.profile-card .profile-pic,
+.suggestion-card .profile-pic {
+    flex: 0 0 40px;
+    /* Sabit genişlik */
+    height: 40px;
+    margin-right: 10px;
+}
+
+.profile-card .profile-pic img,
+.suggestion-card .profile-pic img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-card>div,
+.suggestion-card>div {
+    flex: 1;
+    /* Kalan boşluğu doldur */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* Dikey ortala */
+}
+
+.username {
+    font-weight: bold;
+    font-size: 14px;
+    color: #262626;
+}
+
+.sub-text {
+    color: #8e8e8e;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+/* Takip Et Butonu */
+.action-btn {
+    border: none;
+    background: none;
+    color: #0095f6;
+    /* Instagram Mavisi */
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.suggestion-text {
+    color: #8e8e8e;
+    font-weight: bold;
+    font-size: 14px;
+    margin: 20px 0;
+}
+
+/* Ekran küçülürse (Tablet/Mobil) sağ tarafı gizle */
+@media (max-width: 1000px) {
+    .right-col {
+        display: none;
+    }
+
+    .wrapper,
+    .nav-wrapper {
+        width: 90%;
+        justify-content: center;
+    }
+
+    .left-col {
+        width: 100%;
+    }
+}
+
+/* --- SOHBET SAYFASI DÜZENİ --- */
+.main-chat {
+    display: flex;
+    justify-content: center;
+    margin-top: 80px;
+    /* Navbar'ın altında kalsın */
+    height: calc(100vh - 100px);
+    /* Sayfanın tamamını kaplasın */
+}
+
+.chat-wrapper {
+    width: 70%;
+    max-width: 935px;
+    background: #fff;
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
+    display: flex;
+    /* Yan yana dizmek için */
+    overflow: hidden;
+}
+
+/* Sol Taraf (Liste) */
+.chat-sidebar {
+    width: 35%;
+    /* Listenin genişliği */
+    border-right: 1px solid #dbdbdb;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-header {
+    height: 60px;
+    border-bottom: 1px solid #dbdbdb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    position: relative;
+}
+
+.chat-header i.fa-pen-to-square {
+    position: absolute;
+    right: 20px;
+    cursor: pointer;
+}
+
+.chat-users {
+    overflow-y: auto;
+    /* Kaydırma çubuğu */
+    flex: 1;
+}
+
+.user-item {
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.user-item:hover {
+    background: #fafafa;
+}
+
+.user-item.active {
+    background: #efefef;
+}
+
+/* Seçili kişi gri olsun */
+
+.user-item img {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.user-detail .name {
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.user-detail .last-msg {
+    color: #8e8e8e;
+    font-size: 13px;
+}
+
+/* Sağ Taraf (Mesaj Kutusu) */
+.chat-box {
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-box-header {
+    height: 60px;
+    border-bottom: 1px solid #dbdbdb;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-box-header .user-info {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+}
+
+.chat-box-header img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+/* Mesaj Balonları */
+.messages-area {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.message {
+    max-width: 70%;
+    padding: 10px 15px;
+    border-radius: 22px;
+    font-size: 14px;
+}
+
+.message.incoming {
+    align-self: flex-start;
+    /* Sola yasla */
+    background: #fff;
+    border: 1px solid #dbdbdb;
+}
+
+.message.outgoing {
+    align-self: flex-end;
+    /* Sağa yasla */
+    background: #efefef;
+}
+
+/* Mesaj Yazma Inputu */
+.chat-input-area {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.chat-input-area input {
+    flex: 1;
+    padding: 10px 15px;
+    border-radius: 22px;
+    border: 1px solid #dbdbdb;
+    outline: none;
+}
+
+.chat-input-area i {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* --- BİLDİRİM KUTUSU (DROPDOWN) --- */
+.notification-container {
+    position: relative;
+    /* İçindeki kutu buna göre hizalansın */
+}
+
+.notification-dropdown {
+    display: none;
+    /* Başlangıçta gizli */
+    position: absolute;
+    top: 45px;
+    right: -10px;
+    width: 350px;
+    background: #fff;
+    border: 1px solid #dbdbdb;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* JS ile 'active' classı ekleyince görünür olsun */
+.notification-dropdown.active {
+    display: block;
+}
+
+.notification-header {
+    padding: 10px 15px;
+    font-weight: bold;
+    border-bottom: 1px solid #dbdbdb;
+    font-size: 14px;
+}
+
+/* Bildirim Öğesi Tasarımı */
+.notif-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid #fafafa;
+    cursor: pointer;
+}
+
+.notif-item:hover {
+    background: #fafafa;
+}
+
+.notif-user-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 12px;
+}
+
+.notif-text {
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.notif-text span {
+    font-weight: bold;
+}
+
+.notif-time {
+    color: #8e8e8e;
+    font-size: 12px;
+    margin-left: auto;
+    /* Sağa yasla */
+}
+
+/* --- PROFİL SAYFASI STİLLERİ --- */
+
+.profile-container {
+    max-width: 935px;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+
+/* Üst Kısım (Header) */
+.profile-header {
+    display: flex;
+    justify-content: center;
+    margin-top: 60px;
+    /* Navbar boşluğu */
+    border-bottom: 1px solid #dbdbdb;
+    padding-bottom: 40px;
+    margin-bottom: 40px;
+}
+
+.profile-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    /* Sol taraf resim, sağ taraf bilgiler */
+    column-gap: 30px;
+}
+
+.profile-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-image img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #dbdbdb;
+}
+
+.profile-user-settings {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-user-name {
+    font-size: 28px;
+    font-weight: 300;
+    margin-right: 20px;
+}
+
+.profile-edit-btn {
+    background-color: transparent;
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    padding: 5px 9px;
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+.profile-stats ul {
+    display: flex;
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+.profile-stats li {
+    margin-right: 40px;
+    font-size: 16px;
+}
+
+.profile-stat-count {
+    font-weight: bold;
+}
+
+.profile-bio {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.profile-real-name {
+    font-weight: bold;
+}
+
+/* --- GALERİ (GRID) TASARIMI --- */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 3'lü sütun yap */
+    gap: 28px;
+    width: 100%;
+}
+
+.gallery-item {
+    position: relative;
+    cursor: pointer;
+    aspect-ratio: 1 / 1;
+    /* Tam kare olsun */
+}
+
+.gallery-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Hover Efekti (Üzerine gelince kararma) */
+.gallery-item-info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    /* Yarı saydam siyah */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    /* Başlangıçta gizli */
+    transition: opacity 0.2s;
+}
+
+.gallery-item:hover .gallery-item-info {
+    opacity: 1;
+    /* Üzerine gelince göster */
+}
+
+.gallery-item-info ul {
+    display: flex;
+    list-style: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.gallery-item-info li {
+    margin: 0 15px;
+}
+
+/* --- PROFİL BAŞLIK DÜZENLEMESİ (Güncel) --- */
+
+.profile-header {
+    margin-top: 60px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid #dbdbdb;
+}
+
+/* Grid Yapısı: Resmi biraz daraltıp yazıya yer açalım */
+.profile-header .profile-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    /* Sol: Resim, Sağ: Bilgi */
+    column-gap: 30px;
+    align-items: center;
+    max-width: 800px;
+    /* Genişliği sınırladık ki çok yayılmasın */
+    margin: 0 auto;
+}
+
+/* Profil Resmi */
+.profile-image {
+    display: flex;
+    justify-content: center;
+}
+
+.profile-image img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #dbdbdb;
+}
+
+/* Sağ Taraftaki Bilgiler */
+.profile-user-settings {
+    display: flex;
+    align-items: center;
+    /* İsim ve butonu aynı hizaya getir */
+    margin-bottom: 20px;
+}
+
+.profile-user-name {
+    font-size: 28px;
+    font-weight: 300;
+    margin-right: 20px;
+}
+
+/* İstatistikler (DÜZELTİLEN KISIM) */
+.profile-stats ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+.profile-stats li {
+    margin-right: 40px;
+    font-size: 16px;
+    display: flex;
+    /* İçindekileri yan yana diz */
+    gap: 5px;
+    /* Sayı ile yazı arasına boşluk */
+    color: #262626;
+}
+
+.profile-stat-count {
+    font-weight: 600;
+    /* Sayı kalın olsun */
+}
+
+/* Galeri Grid Düzeni */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 3 sütun */
+    gap: 20px;
+    /* Fotoğraflar arası boşluk */
+    padding-top: 20px;
+}
+
+/* Mobilde Düzen */
+@media (max-width: 768px) {
+    .profile-header .profile-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        text-align: center;
+    }
+
+    .profile-stats ul {
+        justify-content: center;
+    }
+
+    .profile-user-settings {
+        justify-content: center;
+    }
+}
+
+/* SUDEYLE OLAN KISIM */
+
+
+
+
+
+
+/* Yorum Kutusu Stili */
+.comment-wrapper {
+    width: 100%;
+    height: 50px;
+    border-top: 1px solid #dfdfdf;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.comment-wrapper .icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.comment-box {
+    width: 80%;
+    height: 100%;
+    border: none;
+    outline: none;
+    font-size: 14px;
+}
+
+.comment-btn {
+    width: 70px;
+    border: none;
+    background: none;
+    color: #0095f6;
+    font-weight: bold;
+    cursor: pointer;
+    opacity: 0.5;
+    /* Yazı yazılana kadar soluk dursun */
+}
+
+.comment-box:focus+.comment-btn {
+    opacity: 1;
+}
+
+/* --- GENEL SAYFA YAPISI (Eski Haline Dönüş) --- */
+body {
+    background-color: #fafafa;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    /* İçeriği ortala */
+}
+
+/* Tüm içeriği tutan ana kapsayıcı */
+#main-content {
+    width: 100%;
+    max-width: 600px;
+    /* Postların genişliğini sınırlayalım */
+    margin-top: 20px;
+}
+
+/* --- STORY ALANI (En Üstte) --- */
+.stories-container {
+    background-color: #fff;
+    border: 1px solid #dbdbdb;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 16px 0;
+    overflow: hidden;
+}
+
+.story-scroll {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding: 0 15px;
+    scrollbar-width: none;
+}
+
+.story-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.story {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    min-width: 70px;
+}
+
+.img-ring {
+    width: 66px;
+    height: 66px;
+    border-radius: 50%;
+    padding: 2px;
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+}
+
+.img-ring img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    object-fit: cover;
+}
+
+.story span {
+    font-size: 12px;
+    margin-top: 5px;
+    max-width: 70px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* --- POST YAPISI (Eski Görseldeki Gibi) --- */
+.post {
+    border: 1px solid #dbdbdb;
+    background: #fff;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    padding: 14px;
+    border-bottom: 1px solid #efefef;
+}
+
+.profile-img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.username {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.post-image img {
+    width: 100%;
+    display: block;
+}
+
+.post-content-area {
+    padding: 12px 16px;
+}
+
+.post-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    font-size: 24px;
+}
+
+.liked-by {
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.comments-list {
+    list-style: none;
+    padding: 0;
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.comments-list li {
+    margin-bottom: 4px;
+}
+
+.time {
+    color: #8e8e8e;
+    font-size: 10px;
+    margin-top: 8px;
+    text-transform: uppercase;
+}
+
+.add-comment {
+    border-top: 1px solid #efefef;
+    padding: 10px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comment-input {
+    border: none;
+    flex-grow: 1;
+    /* Kalan alanı doldur */
+    outline: none;
+}
+
+.post-btn {
+    background: none;
+    border: none;
+    color: #0095f6;
+    font-weight: bold;
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+.post-btn:hover {
+    opacity: 1;
+}
+
+/* STORY KISMI */
+
+/* Story Ana Kutusu */
+.status-wrapper {
+    background-color: #fff;
+    border: 1px solid #dfdfdf;
+    border-radius: 8px;
+    padding: 16px 0;
+    /* Üstten alttan boşluk */
+    margin-bottom: 20px;
+    /* Postlarla arasındaki mesafe */
+    display: flex;
+    overflow-x: auto;
+    /* Yatay kaydırma */
+    overflow-y: hidden;
+    white-space: nowrap;
+    /* Alt satıra inmeyi engelle */
+    gap: 15px;
+    /* Storyler arası boşluk */
+}
+
+/* Kaydırma çubuğunu gizle (Estetik için) */
+.status-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.status-wrapper {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* --- HİKAYE DAİRELERİNİ BÜYÜTME (Güncellenmiş Kodlar) --- */
+
+.status-card {
+    flex: 0 0 auto;
+    width: 85px;
+    /* Genişlik arttı */
+    max-width: 85px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 15px;
+    cursor: pointer;
+    /* Tıklanabilir olduğunu göster */
+}
+
+.status-card .profile-pic {
+    width: 75px;
+    /* Çap büyüdü (Instagram standardına yakın) */
+    height: 75px;
+    border-radius: 50%;
+    overflow: hidden;
+    padding: 3px;
+    background: linear-gradient(45deg, #33c4f0 0%, #c85090 25%, #3a17a2 50%, #8f1747 75%, #4d0362 100%);
+    transition: transform 0.2s;
+    /* Tıklama efekti için */
+}
+
+/* Tıklanınca hafifçe küçülsün */
+.status-card:active .profile-pic {
+    transform: scale(0.95);
+}
+
+.status-card .profile-pic img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #fff;
+}
+
+/* Kullanıcı Adı */
+.username-story {
+    font-size: 12px;
+    color: #262626;
+    margin-top: 5px;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 74px;
+}
+
+/* Modal Arka Planı (Tam Ekran Siyahlık) */
+.modal-overlay {
+    display: none;
+    /* Başlangıçta gizli */
+    position: fixed;
+    z-index: 1000;
+    /* Her şeyin üstünde */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    /* %90 Siyah */
+    justify-content: center;
+    align-items: center;
+}
+
+/* Büyüyen Resim */
+.modal-content img {
+    max-height: 80vh;
+    /* Ekranın %80'i kadar boy */
+    max-width: 90%;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+/* Kapatma Çarpısı (X) */
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: #fff;
+    font-size: 40px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* STORY MODAL RESİM AYARI (ZORLA BÜYÜTME MODU) */
+.modal-content img {
+    width: 100%;
+    /* Bulunduğu kutuyu tamamen doldur */
+    min-width: 550px;
+    /* En az bu kadar geniş olsun (Küçükleri büyütür) */
+    max-width: 600px;
+    /* Çok da devasa olmasın */
+    max-height: 80vh;
+    /* Ekranın boyunu aşmasın */
+
+    display: block;
+    margin: 0 auto;
+    object-fit: cover;
+    /* Resmi kutuya yay (Gerekirse kenardan kırp ama doldur) */
+    border-radius: 10px;
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
+}
+
+/* Mobilde (Telefonda) taşmasın diye ayar */
+@media (max-width: 600px) {
+    .modal-content img {
+        min-width: auto;
+        width: 90vw;
+    }
+}
+
+/* --- STORY MODAL GÜNCEL KODLAR (GARANTİ ÇÖZÜM) --- */
+
+/* Modalın Kendisi */
+.modal-content {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* Resim Ayarları */
+.modal-content img {
+    max-width: 90vw;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 10px;
+    display: block;
+    z-index: 9000;
+    /* Resim altta */
+}
+
+/* --- ACİL ÇIKIŞ BUTONU DÜZELTMESİ --- */
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: #fff;
+    font-size: 50px;
+    /* Biraz daha büyüttüm, parmakla rahat basılsın */
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10001 !important;
+    /* Resimden (9000) ve Kalpten (10000) daha büyük! */
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    /* Beyaz zeminde bile görünsün */
+    transition: transform 0.2s;
+    display: block;
+    /* Gizli kalmasın */
+}
+
+.close-modal:hover {
+    color: #ff4d4d;
+    /* Üzerine gelince kırmızı olsun */
+    transform: scale(1.2);
+    /* Hafif büyüsün */
+}
+
+/* --- PROFİL RESİMLERİ DÜZELTMESİ (HER YERDE GEÇERLİ) --- */
+
+/* Profil resmi kutusunun kendisi */
+.profile-pic {
+    width: 40px;
+    /* Standart bir boyut belirleyelim */
+    height: 40px;
+    border-radius: 50%;
+    /* Tam yuvarlak yap */
+    overflow: hidden;
+    /* Dışarı taşan kısımları kes */
+    flex-shrink: 0;
+    /* Daralmasını/ezilmesini engelle */
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    /* Çok hafif bir çerçeve (isteğe bağlı) */
+}
+
+/* Kutunun içindeki resim */
+.profile-pic img {
+    width: 100%;
+    height: 100%;
+    /* İşte sihirli kod! Resmi bozmadan, kırparak kutuya sığdırır */
+    object-fit: cover;
+}
+
+/* Postların içindeki (başlıktaki) resimler için özel ayar (biraz daha küçük olabilirler) */
+.post .user .profile-pic {
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
+    /* İsimle arasına boşluk koy */
+}
+
+/* --- POST ETKİLEŞİMLERİ --- */
+
+/* İkonlara tıklanabilsin */
+.reaction-wrapper .icon {
+    cursor: pointer;
+    transition: transform 0.2s, color 0.2s;
+}
+
+/* Tıklayınca hafif zıplasın */
+.reaction-wrapper .icon:active {
+    transform: scale(1.2);
+}
+
+/* Beğenilen Post (Kırmızı Kalp) */
+.fa-heart.liked {
+    font-weight: 900 !important;
+    /* İçi dolu */
+    color: #ed4956;
+}
+
+/* Kaydedilen Post (Siyah Ayraç) */
+.fa-bookmark.saved {
+    font-weight: 900 !important;
+    color: black;
+}
+
+/* Yeni Eklenen Yorumlar */
+.user-comment {
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+.user-comment span {
+    font-weight: 700;
+    margin-right: 5px;
+}
+
+/* --- TAKİP ET BUTONLARI --- */
+
+/* Butonun genel hali */
+.action-btn {
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 12px;
+    border: none;
+    background: none;
+    color: #0095f6;
+    /* Instagram Mavisi */
+    transition: color 0.2s ease;
+}
+
+/* Takip Ediliyor Modu (Siyah) */
+.action-btn.following {
+    color: #262626 !important;
+    /* Siyah */
+}
+
+/* Tıklayınca hafif soluklaşsın */
+.action-btn:active {
+    opacity: 0.7;
+}
+
+/* --- GİRİŞ PENCERESİ TASARIMI --- */
+
+/* Arka Plan (Karartma) */
+.login-overlay {
+    display: none;
+    /* Başlangıçta gizli */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.65);
+    /* Arkası hafif siyah olsun */
+    z-index: 20000;
+    /* Story'den bile daha üstte olsun */
+    justify-content: center;
+    align-items: center;
+}
+
+/* Beyaz Kutu */
+.login-card {
+    background-color: white;
+    width: 350px;
+    padding: 40px;
+    border-radius: 12px;
+    /* Köşeleri yumuşat */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    animation: fadeIn 0.3s ease;
+    /* Açılırken yumuşak gelsin */
+}
+
+/* Kapatma Çarpısı (X) */
+.close-login {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 30px;
+    color: #333;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.close-login:hover {
+    color: #ed4956;
+    /* Üstüne gelince kırmızı olsun */
+}
+
+/* İçerik Stilleri */
+.login-logo {
+    width: 180px;
+    margin-bottom: 20px;
+}
+
+.login-title {
+    font-weight: bold;
+    color: #8e8e8e;
+    margin-bottom: 25px;
+    font-size: 16px;
+}
+
+.login-input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #dbdbdb;
+    border-radius: 5px;
+    background-color: #fafafa;
+    outline: none;
+    font-size: 14px;
+    box-sizing: border-box;
+    /* Kutudan taşmasın */
+}
+
+.login-input:focus {
+    border-color: #a8a8a8;
+}
+
+.login-btn {
+    width: 100%;
+    background-color: #0095f6;
+    /* Instagram Mavisi */
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.login-btn:hover {
+    background-color: #0086dd;
+}
+
+.forgot-pass {
+    font-size: 12px;
+    color: #00376b;
+    margin-top: 25px;
+    cursor: pointer;
+}
+
+/* Animasyon */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* --- PROFİL SAYFASI TASARIMI (YENİ) --- */
+
+.profile-container {
+    max-width: 935px;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+
+.profile {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: repeat(3, auto);
+    grid-column-gap: 30px;
+    align-items: center;
+}
+
+.profile-image {
+    grid-row: 1 / -1;
+    display: flex;
+    justify-content: center;
+}
+
+.profile-image img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 1px solid #dbdbdb;
+}
+
+.profile-user-settings {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.profile-user-name {
+    font-size: 28px;
+    font-weight: 300;
+}
+
+.profile-edit-btn {
+    background-color: #fafafa;
+    border: 1px solid #dbdbdb;
+    color: #262626;
+    border-radius: 4px;
+    padding: 5px 9px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.profile-stats ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.profile-stats li {
+    font-size: 16px;
+    margin-right: 40px;
+}
+
+.profile-stat-count {
+    font-weight: 600;
+}
+
+.profile-real-name {
+    font-weight: 600;
+}
+
+/* --- GALERİ (GRID) ALANI --- */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 3 Yan Yana */
+    gap: 28px;
+    max-width: 935px;
+    margin: 0 auto;
+    padding-bottom: 50px;
+}
+
+.gallery-item {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    /* Kare Görüntü */
+    cursor: pointer;
+}
+
+.gallery-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Mobilde Düzenleme */
+@media (max-width: 768px) {
+    .profile {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .profile-image {
+        grid-row: 1;
+    }
+
+    .gallery {
+        gap: 3px;
+    }
+
+    .gallery-item {
+        height: 120px;
+    }
+}
+
+/* =========================================
+   PROFİL SAYFASI DÜZELTİLMİŞ CSS
+   ========================================= */
+
+/* Tüm Sayfayı Ortala */
+.profile-main {
+    max-width: 935px;
+    margin: 0 auto;
+    padding: 30px 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* --- ÜST KISIM (HEADER) --- */
+.profile-header {
+    display: flex;
+    margin-bottom: 44px;
+    align-items: flex-start;
+    /* Yukarı hizala */
+}
+
+/* Profil Resmi (Solda) */
+.profile-pic-container {
+    flex-basis: 30%;
+    /* Sol tarafın genişliği */
+    display: flex;
+    justify-content: center;
+    margin-right: 30px;
+}
+
+.profile-pic-hd {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #dbdbdb;
+    padding: 2px;
+    /* Çerçeve boşluğu */
+}
+
+/* Bilgiler (Sağda) */
+.profile-info {
+    flex-basis: 70%;
+    /* Sağ tarafın genişliği */
+    display: flex;
+    flex-direction: column;
+}
+
+/* İsim ve Butonlar Satırı */
+.title-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    /* Mobilde sığmazsa aşağı insin */
+    gap: 15px;
+}
+
+.profile-name {
+    font-size: 28px;
+    font-weight: 300;
+    color: #262626;
+}
+
+.edit-btn {
+    background: transparent;
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    color: #262626;
+}
+
+/* İstatistikler (Gönderi - Takipçi) */
+.stats-row {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+.stats-row li {
+    font-size: 16px;
+    margin-right: 40px;
+}
+
+.stats-row span {
+    font-weight: 700;
+    color: #262626;
+}
+
+/* Biyografi */
+.bio-section {
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.bio-name {
+    font-weight: 700;
+}
+
+/* --- ORTA ÇİZGİ VE SEKMELER --- */
+.tabs-container {
+    border-top: 1px solid #dbdbdb;
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    margin-bottom: 20px;
+}
+
+.tab {
+    padding-top: 15px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #8e8e8e;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.tab.active {
+    color: #262626;
+    border-top: 1px solid #262626;
+    margin-top: -1px;
+}
+
+/* --- RESİM GALERİSİ (GRID SİSTEMİ) --- */
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 3 Eşit Kolon */
+    gap: 28px;
+    /* Aralarındaki boşluk */
+    width: 100%;
+}
+
+.grid-item {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    /* KARE YAPMA TAKTİĞİ */
+    overflow: hidden;
+    background-color: #efefef;
+    /* Resim yüklenmezse gri dursun */
+}
+
+.grid-item img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Kutuyu doldur */
+    transition: opacity 0.2s;
+}
+
+/* Hover Efekti */
+.grid-item:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+/* Mobil Uyum */
+@media (max-width: 768px) {
+    .profile-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .profile-pic-container {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .title-row {
+        justify-content: center;
+    }
+
+    .stats-row {
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .stats-row li {
+        margin-right: 0;
+        font-size: 14px;
+    }
+
+    .photo-grid {
+        gap: 3px;
+    }
+}
+
+/* --- YARDIMCI SINIFLAR --- */
+/* Elementi gizlemek için kullanılır */
+.hidden {
+    display: none !important;
+}
+
+/* --- ALTTAKİ BUTON KISMI --- */
+.story-actions {
+    position: absolute;
+    bottom: 30px;
+    /* Aşağıdan mesafe */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    /* En üstte */
+    background: rgba(0, 0, 0, 0.4);
+    /* Kapsül rengi */
+    padding: 10px 25px;
+    border-radius: 50px;
+    backdrop-filter: blur(4px);
+}
+
+#story-like-btn {
+    font-size: 35px;
+    color: white;
+    /* Varsayılan beyaz */
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Tıklanınca Zıplama Efekti */
+#story-like-btn:active {
+    transform: scale(1.4);
+}
+
+/* --- KIRMIZI KALP CLASS'I (ÖNEMLİ) --- */
+/* JS bu class'ı ekleyince kalp kırmızı ve dolu olacak */
+.liked-heart {
+    color: #ff0000 !important;
+    /* Kesinlikle Kırmızı */
+    filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.8));
+    /* Parlama */
+}
+
+/* --- ORTADAKİ PATLAYAN KALP --- */
+/* --- ORTADAKİ PATLAYAN KALP (GÜNCELLENMİŞ) --- */
+.pop-up-heart {
+    position: fixed;
+    /* absolute DEĞİL, fixed yaptık. Ekrana yapışsın. */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    font-size: 150px;
+    color: rgb(240, 3, 3);
+    z-index: 2147483647;
+    /* CSS'teki maksimum sayı. Her şeyin üstünde olacak. */
+    pointer-events: none;
+    opacity: 0;
+    /* Font Awesome ikonu olduğu için display block verelim */
+    display: block;
+}
+
+/* Animasyon aynı kalabilir */
+@keyframes bloom {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+    }
+
+    20% {
+        transform: translate(-50%, -50%) scale(1.5);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(1.8);
+        opacity: 0;
+    }
+}
+
+.animate-bloom {
+    animation: bloom 0.8s ease-out forwards;
+}
+
+/* --- ACİL DÜZELTME KODLARI --- */
+
+/* 1. Modalın sayfadan bağımsız, üstte durmasını zorla */
+#imageModal {
+    display: none;
+    /* Başlangıçta mutlaka gizli olsun */
+    position: fixed !important;
+    /* Sayfa akışından çıkar */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99999 !important;
+    /* Her şeyin üstünde olsun */
+    background-color: rgba(0, 0, 0, 0.85);
+    /* Arka planı karart */
+    align-items: center;
+    justify-content: center;
+}
+
+/* 2. İçerik kutusunu toparla */
+#imageModal .modal-content {
+    display: flex !important;
+    /* Yan yana dizilimi koru */
+    flex-direction: row !important;
+    background-color: #fff;
+    margin: auto;
+    width: 90%;
+    max-width: 900px;
+    height: 80vh;
+    /* Yüksekliği sınırla */
+    max-height: 600px;
+    overflow: hidden;
+    /* Taşanları gizle */
+    border-radius: 5px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    /* Tam ortala */
+}
+
+/* 3. Sol taraftaki resmi sınırla (O devasa yüzü küçült) */
+#imageModal .modal-left {
+    flex: 1.5;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    overflow: hidden;
+}
+
+#imageModal .modal-left img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    /* Resmi kutuya sığdır */
+    display: block;
+}
+
+/* 4. Sağ tarafı (Yorumlar) düzenle */
+#imageModal .modal-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: #fff;
+}
+
+/* Header içindeki küçük profil resmini düzelt */
+.modal-header img.modal-pp {
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* =========================================
+   MODAL (AÇILIR PENCERE) DÜZELTİLMİŞ KODLAR
+   ========================================= */
+
+/* =========================================
+   MODAL (AÇILIR PENCERE) - TAMİR EDİLMİŞ VERSİYON
+   ========================================= */
+
+#imageModal {
+    display: none;
+    /* JS açana kadar gizli */
+    position: fixed !important;
+    /* Sayfadan bağımsız havada durmalı */
+    z-index: 99999;
+    /* En üstte */
+    padding-top: 50px;
+    /* Üstten biraz boşluk */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    /* Taşan kısım olursa kaydır */
+    background-color: rgba(0, 0, 0, 0.85);
+    /* Arka plan siyah */
+}
+
+.modal-content {
+    display: flex !important;
+    /* Yan yana dizilim */
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    width: 90%;
+    max-width: 900px;
+    height: 600px;
+    /* Sabit yükseklik */
+    border-radius: 3px;
+    overflow: hidden;
+    /* Köşelerden taşmayı önle */
+}
+
+/* --- SOL TARA (Büyük Resim) --- */
+.modal-left {
+    flex: 1.5;
+    /* Alanın %60'ını kapla */
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.modal-left img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* Resmi bozmadan sığdır */
+    display: block;
+}
+
+/* --- SAĞ TARAF (Chat ve Profil) --- */
+.modal-right {
+    flex: 1;
+    /* Alanın %40'ını kapla */
+    display: flex;
+    flex-direction: column;
+    /* Alt alta dizil */
+    position: relative;
+    background-color: white;
+}
+
+/* --- HEADER KISMI (Sorunlu kısım burasıydı) --- */
+.modal-header {
+    display: flex;
+    align-items: center;
+    padding: 14px;
+    border-bottom: 1px solid #dbdbdb;
+    height: 60px;
+    /* Header yüksekliğini sabitledik */
+    box-sizing: border-box;
+}
+
+/* O devasa yüzü küçülten kural: */
+.modal-header img.modal-pp {
+    width: 32px !important;
+    /* Genişlik KESİN 32px olacak */
+    height: 32px !important;
+    /* Yükseklik KESİN 32px olacak */
+    min-width: 32px;
+    /* Asla küçülme */
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover;
+    display: block;
+    flex-shrink: 0;
+    /* Sıkışma veya genişleme YAPMA */
+}
+
+.modal-username {
+    font-weight: 600;
+    font-size: 14px;
+    color: #262626;
+}
+
+/* --- YORUMLAR --- */
+.modal-comments {
+    padding: 16px;
+    flex-grow: 1;
+    /* Kalan boşluğu doldur */
+    overflow-y: scroll;
+    /* Sadece burası kaydırılabilir olsun */
+    font-size: 14px;
+}
+
+/* --- ALT AKSİYONLAR --- */
+.modal-actions {
+    border-top: 1px solid #dbdbdb;
+    padding: 10px 16px;
+    margin-top: auto;
+    /* En alta it */
+    background: white;
+}
+
+.like-count {
+    font-weight: 600;
+    margin-bottom: 5px;
+    display: block;
+}
+
+/* --- KAPAT BUTONU --- */
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 100000;
+}
+
+/* --- MODAL (AÇILIR PENCERE) STİLLERİ --- */
+#imageModal {
+    display: none;
+    /* JS ile açılacak */
+    position: fixed;
+    z-index: 99999;
+    /* En üstte durması için */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.85);
+    /* Arka plan siyah */
+}
+
+.modal-content {
+    display: flex;
+    /* Yan yana dizilim */
+    background-color: #fefefe;
+    margin: 5% auto;
+    /* Üstten biraz boşluk */
+    padding: 0;
+    width: 90%;
+    max-width: 900px;
+    height: 600px;
+    /* Sabit yükseklik */
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+/* Mobilde alt alta geçmesi için */
+@media (max-width: 700px) {
+    .modal-content {
+        flex-direction: column;
+        height: auto;
+        margin: 10% auto;
+    }
+
+    .modal-right {
+        height: auto;
+        overflow: visible;
+    }
+}
+
+/* Sol Taraf (Resim) */
+.modal-left {
+    flex: 1.5;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.modal-left img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+/* Sağ Taraf (Chat ve Profil) */
+.modal-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    position: relative;
+}
+
+/* Header */
+.modal-header {
+    display: flex;
+    align-items: center;
+    padding: 14px;
+    border-bottom: 1px solid #dbdbdb;
+    height: 60px;
+    box-sizing: border-box;
+}
+
+/* Profil Resmi (Vesikalık) */
+.modal-header img.modal-pp {
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.modal-username {
+    font-weight: 600;
+    font-size: 14px;
+    color: #262626;
+}
+
+/* Yorumlar */
+.modal-comments {
+    padding: 16px;
+    flex-grow: 1;
+    overflow-y: auto;
+    font-size: 14px;
+    border-bottom: 1px solid #efefef;
+}
+
+.modal-comments p {
+    margin-bottom: 10px;
+}
+
+/* Alt Kısım */
+.modal-actions {
+    padding: 10px 16px;
+    background: white;
+}
+
+.like-count {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* Kapatma Butonu */
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 100000;
+}
+
+/* style.css EN ALTINA EKLE */
+
+/* =========================================
+   HİKAYE MODALI VE EFEKT STİLLERİ
+   ========================================= */
+
+/* Modal Arka Planı (Tüm ekranı kaplayan siyahlık) */
+.modal-overlay {
+    display: none;
+    /* Başlangıçta gizli */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    /* Tam siyah arka plan */
+    z-index: 10000;
+    /* Her şeyin üstünde */
+    justify-content: center;
+    align-items: center;
+}
+
+/* Hikaye İçeriği (Resim ve Alt Kısım) */
+.modal-content {
+    position: relative;
+    width: 100%;
+    max-width: 450px;
+    /* Mobilde tam ekran, PC'de dar */
+    height: 100%;
+    /* Tüm yüksekliği kapla */
+    display: flex;
+    justify-content: center;
+    background-color: #262626;
+    /* Resim yüklenirken gri görünsün */
+}
+
+/* Büyük Hikaye Resmi */
+#full-story-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* Resmi bozmadan sığdır (veya 'cover' ile doldur) */
+}
+
+/* Alt Kısım (Beğeni, Mesaj) */
+.story-actions {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    /* Alttan yukarı doğru hafif karartma efekti */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+}
+
+/* İkonlar */
+.story-actions i {
+    color: #fff;
+    font-size: 28px;
+    cursor: pointer;
+    margin-right: 15px;
+    transition: transform 0.2s, color 0.2s;
+}
+
+/* Beğenilince Butonun Hali */
+.story-actions i.liked {
+    color: #ed4956;
+    /* Instagram kırmızısı */
+    animation: likeHeartBeat 0.3s ease-in-out;
+    /* Butonun kendisi de atsın */
+}
+
+@keyframes likeHeartBeat {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Mesaj Inputu */
+.story-actions input {
+    flex-grow: 1;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 25px;
+    padding: 10px 20px;
+    color: #fff;
+    outline: none;
+    margin-right: 15px;
+}
+
+.story-actions input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Kapatma Butonu (X) */
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: #fff;
+    font-size: 40px;
+    cursor: pointer;
+    z-index: 10002;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* --- EKRANDA BELİREN BÜYÜK KALP EFEKTİ --- */
+.pop-up-heart {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    /* Başlangıçta görünmez */
+    font-size: 120px;
+    /* Kocaman */
+    color: rgba(237, 73, 86, 0.9);
+    /* Kırmızı ve hafif şeffaf */
+    pointer-events: none;
+    /* Tıklamayı engellemesin */
+    z-index: 10001;
+}
+
+/* Efekt Animasyonu (Büyü ve Kaybol) */
+@keyframes popUpAnim {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+    }
+
+    20% {
+        transform: translate(-50%, -50%) scale(1.3);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0;
+    }
+}
+
+/* Animasyonu Tetikleyen Sınıf */
+.pop-up-heart.animate {
+    animation: popUpAnim 0.8s ease-out forwards;
+}
+
+/* --- HİKAYELER İÇİN ÖZEL KAYDIRMA ÇUBUĞU --- */
+
+/* 1. Yatay Kaydırmayı Aç */
+.status-wrapper {
+    display: flex;
+    overflow-x: auto;
+    /* İçerik taşarsa kaydır */
+    overflow-y: hidden;
+    padding-bottom: 15px;
+    /* Çubuk için alttan biraz boşluk bırak */
+    scrollbar-width: thin;
+    /* Firefox için ince ayar */
+    scrollbar-color: #760885 #f1f1f1;
+    /* Firefox için renkler */
+}
+
+/* 2. Çubuğun Boyutu (Webkit: Chrome, Edge, Safari) */
+.status-wrapper::-webkit-scrollbar {
+    height: 6px;
+    /* Yükseklik (İnce olması için 6px ideal) */
+}
+
+/* 3. Çubuğun Arka Plan Yolu (Gri zemin) */
+.status-wrapper::-webkit-scrollbar-track {
+    background: #fafafa;
+    border-radius: 10px;
+    margin: 0 10px;
+    /* Kenarlardan biraz boşluk */
+}
+
+/* 4. Hareket Eden Çubuk (Story Renkleri Gradient) */
+.status-wrapper::-webkit-scrollbar-thumb {
+    /* Instagram Gradient Renkleri */
+    background: linear-gradient(90deg, #1299d2 0%, #04246cca 25%, #dc27c1 50%, #530664 75%, #bc184f 100%);
+    border-radius: 10px;
+    /* Kenarları yuvarlat */
+    cursor: pointer;
+}
+
+/* Üzerine gelince biraz daha belirgin olsun */
+.status-wrapper::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(90deg, #1daadd 0%, #ab179a 50%, #7406a0 100%);
+}
+
+/* --- ETKİLEŞİM STİLLERİ (YENİ EKLENDİ) --- */
+
+/* Beğenilince Kalp Kırmızı Olsun */
+.fa-solid.liked {
+    color: #ed4956;
+    /* Instagram kırmızısı */
+    animation: likeAnim 0.3s ease-in-out;
+}
+
+/* Kaydedilince İkon Siyah Olsun */
+.fa-solid.saved {
+    color: black;
+}
+
+/* Kalp Atışı Animasyonu */
+@keyframes likeAnim {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Yorum Yapma Alanı */
+.add-comment-section {
+    border-top: 1px solid #efefef;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.add-comment-section i {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.add-comment-section input {
+    flex: 1;
+    /* Kalan boşluğu doldur */
+    border: none;
+    outline: none;
+    font-size: 14px;
+}
+
+.add-comment-section button {
+    background: none;
+    border: none;
+    color: #0095f6;
+    /* Instagram mavisi */
+    font-weight: 600;
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.add-comment-section button:hover {
+    opacity: 1;
+}
+
+/* Yeni Eklenen Yorumlar İçin Stil */
+.user-comment {
+    display: flex;
+    margin-bottom: 5px;
+}
+
+/* Tüm ikonlar için genel ayar */
+.post-footer i,
+.navbar i {
+    cursor: pointer;
+    /* Mouse üzerine gelince el işareti çıkar */
+    transition: transform 0.2s, color 0.2s;
+    /* Değişimler yumuşak olsun */
+}
+
+/* Mouse üzerine gelince (Hover Efekti) */
+.post-footer i:hover,
+.navbar i:hover {
+    color: #8e8e8e;
+    /* Rengi biraz grileştir (Instagram tarzı) */
+    transform: scale(1.1);
+    /* İkon çok hafif büyüsün */
+}
+
+/* Beğeni butonuna tıklandığında alacağı hal (Aktif Class) */
+.fa-heart.active {
+    color: #ed4956;
+    /* Instagram kırmızısı */
+    transform: scale(1.2);
+    /* Tıklanınca biraz daha vurgulu olsun */
+}
+
+/* --- İKON CANLANDIRMA KODLARI --- */
+
+/* 1. Tüm İkonlar İçin Geçiş Ayarı */
+.post-actions i {
+    cursor: pointer;
+    /* Mouse el işareti olsun */
+    transition: all 0.2s ease;
+    /* Büyüme/küçülme yumuşak olsun */
+}
+
+/* 2. Mouse Üzerine Gelince (Hover) */
+.post-actions i:hover {
+    transform: scale(1.2);
+    /* İkon %20 büyüsün */
+    color: #8e8e8e;
+    /* Rengi hafif grileşsin (Instagram efekti) */
+}
+
+/* 3. BEĞENİLİNCE KIRMIZI OLSUN (Senin JS burayı tetikliyor) */
+.fa-heart.liked {
+    color: #ed4956 !important;
+    /* Instagram Kırmızısı */
+    /* !important koydum ki başka renk kodları bunu engellemesin */
+}
+
+/* 4. KAYDEDİLİNCE SİYAH OLSUN */
+.fa-bookmark.saved {
+    color: black !important;
+}
+
+/* Yorum Ekleme Kısmındaki İkonlar */
+.add-comment-section i {
+    cursor: pointer;
+}
+
+/* --- SAYFA YAPISI --- */
+/* --- TÜM SAYFALAR İÇİN ORTAK AYARLAR (Ana Sayfa + DM) --- */
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #fafafa;
+    /* Buradan height ve overflow'u SİLDİK, artık ana sayfa kayabilir */
+}
+
+/* --- SADECE MESAJ SAYFASI İÇİN ÖZEL AYAR (DM Page) --- */
+/* HTML'de body'ye class="dm-page" verdiğin için sadece orayı etkiler */
+body.dm-page {
+    height: 100vh;
+    /* Sadece bu sayfada ekranı tam kapla */
+    overflow: hidden;
+    /* Sadece bu sayfada dış scroll'u kapat */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Üst Menü (Navbar) varsa onun altında kalan alan */
+.main-container {
+    display: flex;
+    /* Yan yana dizilim (Sol liste - Sağ Chat) */
+    max-width: 935px;
+    /* Instagram standart genişliği */
+    margin: 20px auto;
+    /* Ortala ve üstten boşluk bırak */
+    background-color: white;
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
+    height: calc(100vh - 100px);
+    /* Ekran boyundan pay bırak */
+}
+
+/* --- SOL TARAF (KULLANICI LİSTESİ) --- */
+.user-list-panel {
+    width: 350px;
+    /* Sol tarafın genişliği */
+    border-right: 1px solid #dbdbdb;
+    overflow-y: auto;
+    /* Çok kişi varsa scroll çıksın */
+    display: flex;
+    flex-direction: column;
+}
+
+.user-list-header {
+    height: 60px;
+    border-bottom: 1px solid #dbdbdb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* --- SAĞ TARAF (CHAT EKRANI) --- */
+.chat-window {
+    flex: 1;
+    /* Kalan tüm genişliği kapla */
+    display: flex;
+    flex-direction: column;
+    /* İçindekileri alt alta diz */
+    position: relative;
+}
+
+/* Chat Başlığı (Profil resmi ve isim) */
+.chat-header {
+    height: 60px;
+    border-bottom: 1px solid #dbdbdb;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+}
+
+/* --- KRİTİK KISIM: MESAJ ALANI --- */
+/* Burası "yorum kısmı"nın aşağıda kalmasını sağlayan yer */
+.messages-area {
+    flex: 1;
+    /* Burası BÜYÜYEBİLDİĞİ KADAR BÜYÜSÜN */
+    padding: 20px;
+    overflow-y: auto;
+    /* Mesajlar taşarsa scroll çıksın */
+    background-color: white;
+}
+
+/* Mesaj Baloncukları (Örnek) */
+.message-bubble {
+    padding: 10px 15px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    max-width: 70%;
+    font-size: 14px;
+}
+
+.incoming {
+    background-color: white;
+    border: 1px solid #efefef;
+    align-self: flex-start;
+    /* Sola yasla */
+}
+
+.outgoing {
+    background-color: #efefef;
+    align-self: flex-end;
+    /* Sağa yasla */
+    margin-left: auto;
+    /* Sağa itmek için */
+}
+
+/* --- EN ALTTAKİ YAZMA KISMI (Input) --- */
+.chat-input-area {
+    padding: 20px;
+    border-top: 1px solid #dbdbdb;
+    background-color: white;
+    /* Bu alan flex column yapısı sayesinde otomatik en altta durur */
+}
+
+.chat-input-area input {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #dbdbdb;
+    border-radius: 22px;
+    outline: none;
+}
+
+/* --- STORY MODAL (HİKAYE EKRANI) --- */
+.modal-overlay {
+    display: none;
+    /* Başlangıçta gizli */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    /* Koyu siyah arka plan */
+    z-index: 9999;
+    /* En üstte durması için */
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.modal-overlay.active {
+    display: flex;
+    /* Active class'ı gelince görünür olur */
+}
+
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 10001;
+}
+
+.modal-content {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    /* Telefon ekranı genişliği gibi */
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Hikaye Resmi */
+#full-story-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Resmi ekrana sığdır */
+    border-radius: 10px;
+}
+
+/* Hikaye Alt Kısmı (Input ve Kalp) */
+.story-actions {
+    position: absolute;
+    bottom: 20px;
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.story-actions input {
+    background: transparent;
+    border: 1px solid white;
+    border-radius: 20px;
+    padding: 10px 15px;
+    color: white;
+    width: 75%;
+    outline: none;
+}
+
+.story-actions input::placeholder {
+    color: #ddd;
+}
+
+.story-actions i {
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+/* Hikaye Beğenilince Kalp Rengi */
+.story-actions i.fa-solid.liked-story {
+    color: #ff3040;
+    /* Instagram Kırmızısı */
+    transform: scale(1.2);
+    /* Hafif büyüme efekti */
+}
+
+/* Ekrana Çift Tıklayınca Çıkan Büyük Kalp Animasyonu */
+.pop-up-heart {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    font-size: 100px;
+    color: white;
+    opacity: 0;
+    transition: all 0.5s ease;
+}
+
+.pop-up-heart.animate {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0.8;
+}
+
+/* --- STORY MODAL CSS --- */
+.modal-overlay {
+    display: none;
+    /* Gizli başlar */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* JS bu sınıfı ekleyince görünür olur */
+.modal-overlay.active {
+    display: flex !important;
+    /* !important ile zorla gösteriyoruz */
+}
+
+.modal-content {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#full-story-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    color: white;
+    font-size: 35px;
+    cursor: pointer;
+    z-index: 10001;
+}
+
+.story-actions {
+    position: absolute;
+    bottom: 20px;
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.story-actions input {
+    background: transparent;
+    border: 1px solid white;
+    border-radius: 20px;
+    padding: 10px 15px;
+    color: white;
+    width: 75%;
+    outline: none;
+}
+
+/* Beğenilen Kalp */
+.fa-heart.liked {
+    color: #ed4956;
+    /* Instagram kırmızısı */
+    animation: likeBounce 0.2s ease-in-out;
+}
+
+@keyframes likeBounce {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* --- LOGIN MODAL CSS (GÜNCELLENMİŞ) --- */
+.login-overlay {
+    display: none;
+    /* Başlangıçta gizli */
+    position: fixed;
+    /* Ekrana sabitle */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Arka planı karart */
+    z-index: 10000 !important;
+    /* HER ŞEYİN EN ÜSTÜNDE OLSUN */
+    justify-content: center;
+    align-items: center;
+}
+
+.login-card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    width: 350px;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.close-login {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.login-logo {
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+.login-input {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
+    background: #fafafa;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 8px;
+    background-color: #0095f6;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.nav-items {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    /* Sağa yaslar */
+    gap: 22px;
+    /* İkonlar arası boşluk (Azaltırsan daha çok yaklaşırlar) */
+}
+
+/* İkonların kendi kenar boşluklarını sıfırlayalım ki 'gap' tam çalışsın */
+.nav-items a,
+.nav-items i,
+.nav-items .icon {
+    margin: 0;
+    text-decoration: none;
+    /* Link alt çizgilerini kaldırır */
+    color: black;
+    /* Link renklerini siyah yapar */
+    display: flex;
+    /* İkonları dikeyde ortalar */
+    align-items: center;
+}
+
+/* İkon boyutlarını sabitleyelim (İsteğe bağlı) */
+.nav-items i {
+    font-size: 24px;
+}
+
+/* --- POST SİLME MENÜSÜ --- */
+.delete-menu {
+    position: absolute;
+    right: 0;
+    top: 25px;
+    /* 3 noktanın hemen altı */
+    background-color: white;
+    border: 1px solid #dbdbdb;
+    border-radius: 6px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    width: 100px;
+    overflow: hidden;
+}
+
+.delete-menu button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: white;
+    cursor: pointer;
+    font-size: 13px;
+    text-align: center;
+    border-bottom: 1px solid #efefef;
+}
+
+.delete-menu button:hover {
+    background-color: #fafafa;
+}
+
+.delete-menu button:last-child {
+    border-bottom: none;
+}
+
+/* --- BİLDİRİM KUTUSU (NOTIFICATIONS) --- */
+.notification-dropdown {
+    display: none;
+    /* Başlangıçta gizli */
+    position: absolute;
+    top: 45px;
+    /* Kalbin hemen altı */
+    right: -10px;
+    /* Sağa hizala */
+    width: 350px;
+    background: white;
+    border: 1px solid #dbdbdb;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    flex-direction: column;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.notification-dropdown.active {
+    display: flex;
+    /* Active olunca görünür */
+}
+
+.notif-header {
+    padding: 10px 15px;
+    font-weight: bold;
+    border-bottom: 1px solid #dbdbdb;
+    font-size: 16px;
+}
+
+.notif-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid #fafafa;
+    transition: background 0.2s;
+}
+
+.notif-item:hover {
+    background-color: #fafafa;
+}
+
+.notif-item img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 12px;
+    object-fit: cover;
+}
+
+.notif-info {
+    font-size: 14px;
+    flex: 1;
+}
+
+.notif-info span {
+    font-weight: 600;
+}
+
+.notif-info .time {
+    color: gray;
+    font-size: 12px;
+    margin-left: 5px;
+}
+
+.notif-btn {
+    padding: 5px 10px;
+    background-color: #0095f6;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.notif-img-preview {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 4px !important;
+    /* Kare post önizlemesi */
+}
+
+/* --- STORY HEADER (SOL ÜST PROFİL) --- */
+.story-header {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    display: flex;
+    align-items: center;
+    z-index: 100;
+    /* Resmin üstünde dursun */
+    cursor: pointer;
+}
+
+.story-header img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: 2px solid white;
+    /* Etrafında beyaz çerçeve */
+    margin-right: 10px;
+    object-fit: cover;
+}
+
+.story-header span {
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    /* Okunurluk için gölge */
+}
+
+.story-header:hover span {
+    text-decoration: underline;
+    /* Üzerine gelince altını çiz */
+}
+
+/* Story Header Tasarımı - Resmin sol üstüne yapışır */
+.story-header-overlay {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 10;
+    /* Resmin üzerinde dursun */
+    cursor: pointer;
+}
+
+.story-header-overlay img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: 2px solid white;
+    object-fit: cover;
+}
+
+.story-header-overlay span {
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    /* Okunabilirlik için gölge */
+}
+
+/* Modal Content'i relative yapalım ki header ona göre konumlansın */
+.modal-content {
+    position: relative;
+    /* Diğer mevcut stillerini koru... */
+}
+
+/* Modal içeriğini kapsayıcı yapıyoruz ki içindekileri pozisyonlayabilelim */
+.modal-content {
+    position: relative;
+    /* Bu çok önemli! */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Sol üstteki profil alanı tasarımı */
+.story-header {
+    position: absolute;
+    /* Resmi serbest bırakır, istediğimiz yere koyarız */
+    top: 15px;
+    /* Üstten boşluk */
+    left: 15px;
+    /* Soldan boşluk */
+    z-index: 100;
+    /* Resmin ÜSTÜNDE kalmasını sağlar */
+
+    display: flex;
+    /* Yan yana dizilmeleri için */
+    align-items: center;
+    gap: 10px;
+    /* Resim ve yazı arası boşluk */
+    cursor: pointer;
+}
+
+/* Header içindeki küçük yuvarlak profil fotosu */
+.story-header img {
+    width: 35px;
+    /* Küçültüyoruz */
+    height: 35px;
+    border-radius: 50%;
+    /* Yuvarlak yapıyoruz */
+    border: 2px solid white;
+    /* Etrafına beyaz çizgi */
+    object-fit: cover;
+}
+
+/* Header içindeki isim */
+.story-header span {
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+    /* Beyaz yazı okunsun diye gölge */
+}
+
+/* CSS */
+
+/* Kapsayıcıyı relative yapıyoruz ki içindekileri serbestçe yerleştirelim */
+.modal-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header'ı resmin sol üstüne yapıştırıyoruz */
+.story-header {
+    position: absolute;
+    /* Resmi serbest bırak */
+    top: 20px;
+    left: 20px;
+    z-index: 999;
+    /* Resmin ÜSTÜNE ÇIKAR (En önemli kod bu) */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Profil resmi ayarları */
+.story-header img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid white;
+    object-fit: cover;
+}
+
+/* İsim ayarları */
+.story-header span {
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    /* Okunması için gölge */
+}
+
+.story-header {
+    position: absolute !important;
+    /* Kesinlikle serbest dolaşsın */
+    top: 20px !important;
+    left: 20px !important;
+    z-index: 9999 !important;
+    /* EN ÜSTTE OLMAYA ZORLUYORUZ */
+    display: flex !important;
+    align-items: center;
+    gap: 10px;
+    background-color: rgba(0, 0, 0, 0.3);
+    /* Arkasına hafif siyahlık atalım ki belli olsun */
+    padding: 5px 10px;
+    border-radius: 20px;
+}
+
+.story-header img {
+    width: 40px !important;
+    height: 40px !important;
+    display: block !important;
+    /* Gizliyse görünür yap */
+    border-radius: 50%;
+    border: 2px solid #fff;
+}
+
+.story-header span {
+    color: white !important;
+    font-size: 14px !important;
+    display: block !important;
+}
+
+/* CSS Dosyanın En Altına Ekle */
+
+/* 1. Kapsayıcıyı hizalama merkezi yapıyoruz */
+.modal-content {
+    position: relative !important;
+    /* Header buna göre konumlanacak */
+    display: flex;
+    flex-direction: column;
+}
+
+/* 2. Header'ı sol üst köşeye çiviliyoruz */
+.story-header {
+    position: absolute !important;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    /* Resmin en üstünde duracak */
+    display: flex;
+    align-items: center;
+    /* Resmi ve yazıyı ortalar */
+    gap: 12px;
+    /* Resim ile yazı arasındaki boşluk */
+    width: auto;
+    /* Kendi içeriği kadar yer kaplasın, yayılmasın */
+}
+
+/* 3. O yayılan beyaz resmi ZAPT EDİYORUZ (Sorunu çözen yer burası) */
+.story-header img {
+    width: 45px !important;
+    /* Genişlik SABİT */
+    height: 45px !important;
+    /* Yükseklik SABİT */
+    min-width: 45px;
+    /* Asla küçülmesin */
+    border-radius: 50%;
+    /* Tam yuvarlak */
+    border: 2px solid #fff;
+    /* Beyaz çerçeve */
+    object-fit: cover;
+    /* Resmi ezmeden kutuya sığdır */
+    background-color: #333;
+    /* Resim yüklenmezse gri dursun */
+}
+
+/* 4. İsim yazısını görünür yapıyoruz */
+.story-header span {
+    color: white !important;
+    font-size: 15px;
+    font-weight: 600;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.9);
+    /* Arka plan açık renk olsa bile okunsun */
+    pointer-events: none;
+    /* Tıklamayı engelle */
+}
+
+/* Kapatma Butonunu (X) Düzeltme */
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    /* Sağ köşeye yapıştır */
+    left: auto;
+    /* Sol tarafı iptal et */
+
+    color: white;
+    /* Rengi beyaz olsun */
+    font-size: 35px;
+    /* Biraz büyütelim */
+    font-weight: bold;
+    line-height: 1;
+
+    cursor: pointer;
+    z-index: 1001;
+    /* Her şeyin üstünde olsun */
+
+    /* Eğer etrafında gri kutu varsa onu şeffaf yapalım: */
+    background: transparent;
+    border: none;
+}
+
+/* Mouse üzerine gelince hafif parlasın */
+.close-modal:hover {
+    color: #2c0562a6;
+    transform: scale(1.1);
+}
+
+/* CSS dosyanın altına ekle */
+
+/* --- Kapatma Butonu Temel Duruşu --- */
+.story-close-btn {
+    /* Konumlandırma (Sağ Üst Köşe) */
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    z-index: 10001;
+    /* Her şeyin üstünde */
+
+    /* Görünüm */
+    color: white;
+    /* Başlangıç rengi beyaz */
+    font-size: 40px;
+    /* Boyut */
+    font-weight: 500;
+    /* İnce ve zarif bir X */
+    line-height: 1;
+    cursor: pointer;
+    /* El işareti çıksın */
+
+    /* ÖNEMLİ: Tüm değişimler 0.3 saniyede, yumuşakça olsun */
+    transition: all 0.3s ease-in-out;
+
+    /* Hafif bir başlangıç gölgesi */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* --- Mouse Üzerine Gelince (Hover) Olacaklar --- */
+.story-close-btn:hover {
+    /* 1. Renk Değişimi (Instagram pembesi/kırmızısı) */
+    color: #2c0562a6;
+
+    /* 2. Hareket: Hafifçe büyüsün ve 90 derece dönsün */
+    transform: scale(1.2) rotate(90deg);
+
+    /* 3. Parlama Efekti (Neon gibi parlasın) */
+    /* İlk gölge küçük ve net, ikinci gölge büyük ve bulanık */
+    text-shadow: 0 0 10px #2c0562a6, 0 0 25px #2c0562a6;
+}
+
+/* --- Story Alt Kısım Animasyonları --- */
+
+/* 1. MESAJ KUTUSU (Input) */
+.story-actions input {
+    /* Geçişleri yumuşat */
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    /* Hafif belirgin çerçeve */
+    background: rgba(0, 0, 0, 0.2);
+    /* Hafif koyu zemin */
+}
+
+/* Mesaj yazmak için tıklandığında (Focus) */
+.story-actions input:focus {
+    transform: scale(1.02);
+    /* Hafifçe büyüsün */
+    border-color: #fff;
+    /* Çerçeve parlasın */
+    background: rgba(0, 0, 0, 0.6);
+    /* Zemin netleşsin */
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    /* Arkasına ışık vursun */
+    outline: none;
+    /* Standart tarayıcı çizgisini sil */
+}
+
+/* 2. İKONLAR GENEL AYAR (Kalp ve Uçak) */
+.story-actions i {
+    cursor: pointer;
+    /* Yaylanma efekti (Bouncy) - Çok havalı durur */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* 3. KALP İKONU ÖZEL (Hover) */
+.story-actions .fa-heart:hover {
+    color: #ff3040 !important;
+    /* Instagram kırmızısı */
+    transform: scale(1.4);
+    /* Kalp atışı gibi büyüsün */
+    text-shadow: 0 0 15px #ff3040;
+    /* Etrafa kırmızı ışık saçsın */
+}
+
+/* Tıklanınca (Active - Javascript sınıfı ekleyince zaten oluyor ama destekleyelim) */
+.story-actions .fa-heart.fa-solid {
+    animation: heartBeat 0.5s;
+    /* Tıklanınca bir kere "güm güm" yapsın */
+}
+
+/* 4. UÇAK (DM) İKONU ÖZEL (Hover) */
+.story-actions .fa-paper-plane:hover {
+    color: #0095f6 !important;
+    /* Instagram DM mavisi */
+    /* Uçak havalanıyormuş gibi sağ yukarı kaysın ve dönsün */
+    transform: translate(3px, -3px) rotate(-10deg) scale(1.2);
+    text-shadow: 0 0 15px #0095f6;
+    /* Mavi ışık */
+}
+
+/* Kalp Atışı Animasyonu (Tıklama Efekti İçin) */
+@keyframes heartBeat {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.5);
+    }
+
+    100% {
+        transform: scale(1.2);
+    }
+}
+
+/* --- Story Alt Kısım Animasyonları --- */
+
+/* 1. PROFİL BAŞLIĞI (HEADER) ANİMASYONU */
+.story-header {
+    /* Geçiş ayarı: Her hareket 0.3 saniyede yumuşakça olsun */
+    transition: all 0.3s ease;
+}
+
+.story-header:hover {
+    /* 1. Hafif Büyüme */
+    transform: scale(1.05) translateX(5px);
+    /* Biraz büyüsün ve sağa kaysın */
+
+    /* 2. Parlama Efekti (Drop Shadow en iyisidir) */
+    /* Hem yazı hem resim aynı anda parlar */
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+
+    cursor: pointer;
+}
+
+/* 2. MESAJ KUTUSU (INPUT) ANİMASYONU */
+.story-actions input {
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    /* Hafif belirgin çerçeve */
+    background: rgba(0, 0, 0, 0.2);
+    /* Hafif koyu zemin */
+}
+
+/* Mouse kutunun üstüne gelince (Hover) */
+.story-actions input:hover {
+    transform: scale(1.03);
+    /* Hafifçe büyüsün */
+    border-color: #22b9ffc5;
+    /* Çerçeve bembeyaz olsun */
+    background: rgba(0, 0, 0, 0.5);
+    /* Zemin netleşsin */
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    /* Etrafa ışık saçsın */
+}
+
+/* Yazmak için tıklandığında (Focus) */
+.story-actions input:focus {
+    transform: scale(1.03);
+    border-color: #22b9ffc5;
+    background: rgba(0, 0, 0, 0.7);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+    /* Daha güçlü parlasın */
+    outline: none;
+    /* Standart çizgiyi sil */
+}
+
+/* 3. İKONLAR (Kalp ve Uçak) */
+.story-actions i {
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* Yaylanma efekti */
+}
+
+/* Kalp İkonu */
+.story-actions .fa-heart:hover {
+    color: #ff3040 !important;
+    /* Kırmızı */
+    transform: scale(1.3);
+    /* Büyüme */
+    text-shadow: 0 0 15px #ff3040;
+    /* Kırmızı Işık */
+    cursor: pointer;
+}
+
+/* Uçak (DM) İkonu */
+.story-actions .fa-paper-plane:hover {
+    color: #700a84 !important;
+    /* Mavi */
+    transform: translate(3px, -3px) scale(1.2) rotate(-10deg);
+    /* Havalanma efekti */
+    text-shadow: 0 0 15px #700a84;
+    /* Mavi Işık */
+    cursor: pointer;
+}
+
+/* --- MESAJ ALANI EFEKTLERİ --- */
+
+/* 1. Input Alanını Kapsayan Kutu */
+.chat-input-area {
+    border-top: 1px solid #540c90;
+    padding: 15px;
+    background: #540c90;
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+    transition: box-shadow 0.3s ease;
+}
+
+/* Kutunun üzerine gelince hafif gölge */
+.chat-input-area:focus-within {
+    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* 2. Mesaj Yazma Kutusu (Input) */
+#message-input {
+    flex: 1;
+    /* Alabildiği kadar yer kaplasın */
+    padding: 12px 20px;
+    border: 1px solid #540c90;
+    border-radius: 25px;
+    /* Tam yuvarlak kenarlar */
+    background-color: #540c90;
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    font-size: 14px;
+}
+
+/* Inputa tıklayınca (Focus) */
+#message-input:focus {
+    background-color: #fff;
+    border-color: #0095f6;
+    /* Instagram Mavisi */
+    box-shadow: 0 0 0 3px rgba(0, 149, 246, 0.15);
+    /* Mavi ışık halkası */
+    transform: scale(1.01);
+    /* Çok hafif büyüsün */
+}
+
+/* 3. Gönder Butonu Animasyonu */
+#send-btn {
+    border: none;
+    background: none;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    margin-left: 10px;
+    padding: 8px 12px;
+    border-radius: 8px;
+
+    /* Renk Geçişi (Gradient) Hazırlığı */
+    background-image: linear-gradient(45deg, #0095f6, #a92eff, #ff2e63);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    /* Yazının içine gömme */
+    -webkit-text-fill-color: transparent;
+    /* Yazı rengini şeffaf yap ki arkası görünsün */
+
+    /* Başlangıçta animasyon */
+    animation: gradientFlow 3s ease infinite;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* Yaylanma efekti */
+}
+
+/* Mouse üstüne gelince */
+#send-btn:hover {
+    transform: scale(1.15) rotate(-3deg);
+    /* Büyü ve hafif dön */
+    text-shadow: 0px 5px 15px rgba(169, 46, 255, 0.4);
+    /* Arkaya renkli ışık at */
+}
+
+/* Tıklayınca (Click) */
+#send-btn:active {
+    transform: scale(0.9);
+    /* Küçülme efekti */
+}
+
+/* Boşken sönük dursun (Opsiyonel JS ile tetiklenir) */
+#send-btn.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    filter: grayscale(100%);
+}
+
+/* Renk Akış Animasyonu Keyframes */
+@keyframes gradientFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Navbar düzeni: Logo sol, ikonlar sağ */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    /* İki uca yaslar */
+    align-items: center;
+    width: 100%;
+    padding: 0 20px;
+    /* Kenar boşlukları */
+    box-sizing: border-box;
+    background-color: white;
+    height: 60px;
+    border-bottom: 1px solid #dbdbdb;
+}
+
+/* Logo Boyutu Ayarı */
+.nav-logo img {
+    height: 150px;
+    /* Logonun büyüklüğü */
+    width: auto;
+    margin-top: 7px;
+    display: block;
+}
+
+/* Mevcut ikonları yan yana tut */
+.nav-items {
+    display: flex;
+    gap: 20px;
+}

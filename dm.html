@@ -1,0 +1,790 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat • Nova</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* TEMEL AYARLAR */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #fafafa;
+            overflow: hidden;
+            /* Sayfa kaymasını engelle, sadece sohbet kaysın */
+        }
+
+        /* NAVBAR AYARLARI */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            height: 60px;
+            padding: 0 20px;
+            background-color: white;
+            border-bottom: 1px solid #dbdbdb;
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-logo img {
+            height: 85px;
+            /* Logo boyutu sabitlendi */
+            width: auto;
+            display: block;
+            cursor: pointer;
+        }
+
+        .nav-items {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+        }
+
+        .nav-items i {
+            cursor: pointer;
+            font-size: 22px;
+            color: black;
+        }
+
+        .user-profile img {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid #dbdbdb;
+        }
+
+        /* --- CHAT CSS --- */
+        .main-chat {
+            padding-top: 60px;
+            /* Navbar payı */
+            height: 100vh;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+        }
+
+        .chat-wrapper {
+            width: 935px;
+            /* ESKİSİ: height: calc(100vh - 80px); */
+            /* YENİSİ: 140px çıkararak kutuyu kısaltıyoruz, böylece alt kısım yukarı çıkıyor */
+            height: calc(100vh - 140px);
+
+            background: white;
+            border: 1px solid #dbdbdb;
+            border-radius: 8px;
+            display: flex;
+            overflow: hidden;
+
+            /* Kutuyu biraz daha estetik durması için yukarıdan da itebiliriz */
+            margin-top: 20px;
+        }
+
+        /* SOL TARA: KİŞİ LİSTESİ */
+        .chat-sidebar {
+            width: 350px;
+            border-right: 1px solid #dbdbdb;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            height: 60px;
+            border-bottom: 1px solid #dbdbdb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .chat-users {
+            overflow-y: auto;
+            flex: 1;
+            padding: 10px;
+        }
+
+        .user-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+            border-radius: 8px;
+        }
+
+        .user-item:hover {
+            background-color: #fafafa;
+        }
+
+        .user-item.active {
+            background-color: #efefef;
+        }
+
+        .user-item img {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            margin-right: 15px;
+            object-fit: cover;
+        }
+
+        .user-detail .name {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .user-detail .last-msg {
+            color: #8e8e8e;
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
+        }
+
+        /* SAĞ TARAF: SOHBET KUTUSU */
+        .chat-box {
+            flex: 1;
+            /* Kalan alanı doldur */
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+            height: 100%;
+            /* Yüksekliği wrapper'a eşitle */
+            overflow: hidden;
+            /* Dışarı taşmayı engelle */
+            position: relative;
+        }
+
+        .chat-box-header {
+            height: 60px;
+            border-bottom: 1px solid #dbdbdb;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            justify-content: space-between;
+            flex-shrink: 0;
+            /* Başlık asla küçülmesin */
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .user-info img {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .user-info span {
+            font-weight: 600;
+        }
+
+        /* GERİ BUTONU (Mobilde Gözükecek) */
+        #mobile-back-btn {
+            display: none;
+            /* Masaüstünde gizli */
+            font-size: 20px;
+            margin-right: 15px;
+            cursor: pointer;
+            color: #262626;
+        }
+
+        /* MESAJ ALANI */
+        .messages-area {
+            flex: 1;
+            /* Esnek alan: Boşluğu doldur */
+            overflow-y: auto;
+            /* İçerik taşarsa kaydır */
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-height: 0;
+            /* BU ÇOK ÖNEMLİ: Flex yapısında taşmayı önler */
+        }
+
+        .message {
+            max-width: 60%;
+            padding: 10px 15px;
+            border-radius: 22px;
+            font-size: 14px;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+
+        .message.incoming {
+            background-color: #efefef;
+            align-self: flex-start;
+            /* Sola yasla */
+            border-bottom-left-radius: 4px;
+        }
+
+        .message.outgoing {
+            background-color: #3797f0;
+            /* Mavi */
+            color: white;
+            align-self: flex-end;
+            /* Sağa yasla */
+            border-bottom-right-radius: 4px;
+        }
+
+        /* INPUT ALANI */
+        .chat-input-area {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            border-top: 1px solid #dbdbdb;
+            background-color: white;
+            /* Arkaplan rengi */
+            flex-shrink: 0;
+            /* Bu alan asla küçülmesin veya kaybolmasın */
+            position: relative;
+            /* Z-index sorunu olursa diye */
+            z-index: 10;
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            border: 1px solid #dbdbdb;
+            border-radius: 22px;
+            padding: 10px 15px;
+            outline: none;
+            margin-right: 10px;
+        }
+
+        .chat-input-area button {
+            background: none;
+            border: none;
+            color: #0095f6;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* --- MOBİL UYUMLULUK (DÜZELTİLMİŞ VERSİYON) --- */
+        @media screen and (max-width: 768px) {
+
+            .navbar {
+                padding: 0 10px;
+            }
+
+            /* Mobilde wrapper'ı ekrana SABİTLE (Kaymayı önler) */
+            .chat-wrapper {
+                position: fixed;
+                /* Sabit pozisyon */
+                top: 60px;
+                /* Navbar kadar aşağıdan başla */
+                bottom: 0;
+                /* En alta kadar uzan */
+                left: 0;
+                right: 0;
+                width: 100%;
+                height: auto;
+                /* Yüksekliği top ve bottom belirler */
+                margin-top: 0;
+                border: none;
+                border-radius: 0;
+                background-color: white;
+                z-index: 900;
+            }
+
+            /* SOL MENÜ (MOBİLDE TAM EKRAN) */
+            .chat-sidebar {
+                width: 100%;
+                height: 100%;
+                /* Tüm yüksekliği kapla */
+                display: flex;
+            }
+
+            /* SAĞ KUTU (MOBİLDE GİZLİ) */
+            .chat-box {
+                display: none;
+                width: 100%;
+                height: 100%;
+                /* Wrapper ne kadarsa o kadar ol */
+                flex-direction: column;
+                /* Alt alta diz */
+            }
+
+            /* Header ve Input Alanı sabit boyutta kalsın */
+            .chat-box-header,
+            .chat-input-area {
+                flex: 0 0 auto;
+                /* Büyüyüp küçülmesin */
+            }
+
+            /* Mesaj alanı kalan TÜM boşluğu doldursun */
+            .messages-area {
+                flex: 1 1 auto;
+                /* Esnek alan */
+                overflow-y: auto;
+                /* Sadece burası kaysın */
+                height: auto;
+                min-height: 0;
+                /* Flexbox taşma sorunu için fix */
+                padding-bottom: 10px;
+            }
+
+            /* Input alanını biraz daha yukarı alıp belirginleştirelim */
+            .chat-input-area {
+                padding: 10px 15px 20px 15px;
+                /* Alttan biraz boşluk (iPhone çubuğu için) */
+                background-color: white;
+                border-top: 1px solid #efefef;
+            }
+
+            /* Geri butonu mobilde görünür olsun */
+            #mobile-back-btn {
+                display: block;
+            }
+
+            .user-item:hover {
+                transform: none;
+                box-shadow: none;
+            }
+        }
+
+        /* --- NOVA CHAT UI GELİŞTİRMELERİ (Yeni Eklenenler) --- */
+
+        /* 1. Sayfa Açılış Animasyonu (Yukarıdan Süzülme) */
+        @keyframes chatSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .chat-wrapper {
+            animation: chatSlideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            /* Derinlik hissi */
+        }
+
+        /* 2. Sol Menü: Kullanıcı Listesi Efektleri */
+        .user-item {
+            border-left: 4px solid transparent;
+            /* Sol çizgi için yer ayır */
+            transition: all 0.2s ease;
+        }
+
+        /* Üzerine gelince */
+        .user-item:hover {
+            background: linear-gradient(90deg, #fafafa 0%, #fff 100%);
+            transform: translateX(3px);
+        }
+
+        /* Seçili (Aktif) Kullanıcı - Nova Gradient Çizgisi */
+        .user-item.active {
+            background-color: rgba(160, 51, 255, 0.04);
+            /* Çok hafif mor arka plan */
+            border-left: 4px solid #a033ff;
+            /* Nova Moru Çizgi */
+        }
+
+        .user-item.active .name {
+            color: #a033ff;
+            /* İsim de mor olsun */
+            font-weight: 700;
+        }
+
+        /* 3. Mesaj Balonları Animasyonu (Pop Efekti) */
+        @keyframes msgPop {
+            0% {
+                opacity: 0;
+                transform: translateY(10px) scale(0.9);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .message {
+            animation: msgPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            /* Hafif gölge */
+        }
+
+        /* Gelen Mesajlar */
+        .message.incoming {
+            background-color: #f1f1f1;
+            color: #262626;
+            border-bottom-left-radius: 4px;
+            /* Köşe düzeltmesi */
+        }
+
+        /* Giden Mesajlar (Nova Gradient) */
+        .message.outgoing {
+            /* Düz mavi yerine Nova Gradient */
+            background: linear-gradient(135deg, #0095f6 0%, #a033ff 100%);
+            color: white;
+            box-shadow: 0 4px 10px rgba(160, 51, 255, 0.3);
+            /* Parlama efekti */
+        }
+
+        /* 4. Alt Kısım: Input ve Gönder Butonu */
+        .chat-input-area {
+            transition: border-color 0.3s;
+        }
+
+        /* Input'a tıklayınca çerçeve parlasın */
+        .chat-input-area input:focus {
+            border-color: #a033ff;
+            box-shadow: 0 0 0 4px rgba(160, 51, 255, 0.1);
+        }
+
+        /* Gönder Butonu Animasyonu */
+        #send-btn {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        #send-btn:hover {
+            color: transparent;
+            background-image: linear-gradient(45deg, #0095f6, #a033ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            transform: scale(1.1) translateX(2px);
+            /* Büyü ve sağa kay */
+            text-shadow: 0 2px 10px rgba(160, 51, 255, 0.2);
+        }
+
+        /* 5. Header Profil Resmi (Dönme Efekti) */
+        .user-info img {
+            transition: transform 0.4s ease;
+        }
+
+        .user-info:hover img {
+            transform: rotate(360deg);
+            /* Mouse gelince tam tur döner */
+            border: 2px solid #a033ff;
+            /* Dönünce mor çerçeve çıkar */
+        }
+
+        /* --- NAVBAR İKONLARI HOVER EFEKTİ (Nova Style) --- */
+
+        /* 1. İkonların Temel Hareketi */
+        .nav-items i {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            /* Zıplama efekti için */
+            background: none;
+            /* Varsayılan arka planı temizle */
+            -webkit-text-fill-color: #262626;
+            /* Varsayılan renk siyah */
+        }
+
+        /* 2. İkonun Üzerine Gelince (HOVER) */
+        .nav-items i:hover {
+            /* İkonu büyüt ve yukarı zıplat */
+            transform: scale(1.3) translateY(-2px);
+
+            /* İstediğin Gradient Renk Geçişi */
+            background: -webkit-linear-gradient(45deg, #f554a7, #820d62, #33034f, #0a7aad, #230577);
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            /* İkonun içini şeffaf yapıp arkadaki gradienti göster */
+            -webkit-text-fill-color: transparent;
+
+            /* Hafif bir parlama (Glow) ekleyerek daha canlı göster */
+            filter: drop-shadow(0 4px 5px rgba(2, 2, 111, 0.3));
+        }
+
+        /* 3. Profil Resmi Efekti (Bütünlük bozulmasın diye) */
+        .user-profile img {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .user-profile:hover img {
+            transform: scale(1.15) rotate(5deg);
+            /* Profil resminin etrafına renkli halka */
+            box-shadow:
+                0 0 0 2px #fff,
+                0 0 0 4px #820d62,
+                0 0 10px 2px rgba(130, 13, 98, 0.5);
+        }
+    </style>
+</head>
+
+<body class="dm-page">
+
+    <nav class="navbar">
+        <div class="nav-logo">
+            <a href="index.html">
+                <img src="asset/image/LOGO.png" alt="Nova Logo">
+            </a>
+        </div>
+
+        <div class="nav-items">
+            <a href="index.html" class="icon"><i class="fa-solid fa-house"></i></a>
+            <a href="dm.html" class="icon"><i class="fa-brands fa-facebook-messenger" style="color:black;"></i></a>
+            <a href="post.html"><i class="fa-regular fa-square-plus"></i></a>
+            <a href="notification.html" class="icon"><i class="fa-solid fa-heart"></i></a>
+            <div class="icon user-profile">
+                <a href="profil.html"><img src="asset/image/5.jpg" alt="profil"></a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="main-chat">
+        <div class="chat-wrapper">
+
+            <div class="chat-sidebar" id="sidebar-area">
+                <div class="chat-header">
+                    <a href="profil.html" style="text-decoration: none; color: inherit; cursor: pointer;">
+                        <h3>Emre Çelik <i class="fa-solid fa-angle-down" style="font-size:12px;"></i></h3>
+                    </a>
+                </div>
+                <div class="chat-users">
+                    <div class="user-item" id="user-jameshill" onclick="changeUser('jameshill')">
+                        <img src="asset/image/1.jpg" alt="">
+                        <div class="user-detail">
+                            <div class="name">James Hill</div>
+                            <div class="last-msg">Hi, budy'What's up?? · 1h</div>
+                        </div>
+                    </div>
+
+                    <div class="user-item" id="user-kayra" onclick="changeUser('kayra')">
+                        <img src="asset/kayra/a (5).jpg" alt="">
+                        <div class="user-detail">
+                            <div class="name">Kayra Gültekin</div>
+                            <div class="last-msg">I miss you cousin!!!!! · 3h</div>
+                        </div>
+                    </div>
+
+                    <div class="user-item" id="user-scarlett" onclick="changeUser('scarlett')">
+                        <img src="asset/scarlett/1 (14).jpg" alt="">
+                        <div class="user-detail">
+                            <div class="name">Scarlett Anderson</div>
+                            <div class="last-msg">I love your profile! · 5h</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-box" id="chat-box-area-container">
+                <div class="chat-box-header">
+                    <div style="display: flex; align-items: center;">
+                        <i class="fa-solid fa-arrow-left" id="mobile-back-btn" onclick="backToList()"></i>
+
+                        <div class="user-info" onclick="goToProfile()" title="Profile Git">
+                            <img src="asset/image/1.jpg" alt="" id="header-img">
+                            <span id="header-username">James Hill</span>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-circle-info"></i>
+                </div>
+
+                <div class="messages-area" id="chat-box-area">
+                </div>
+
+                <div class="chat-input-area">
+                    <input type="text" placeholder="Write a message..." id="message-input">
+                    <button id="send-btn">Send</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // --- MOBİL GÖRÜNÜM KONTROLÜ ---
+        const sidebar = document.getElementById('sidebar-area');
+        const chatBox = document.getElementById('chat-box-area-container');
+
+        // Masaüstü için varsayılan: James Hill seçili kalsın
+        let activeUser = "jameshill";
+
+        const conversations = {
+            "jameshill": {
+                name: "James Hill",
+                img: "asset/image/1.jpg",
+                profileUrl: "profil.html",
+                messages: [
+                    { text: "Hi, budy'What's up??", type: "incoming" },
+                    { text: "I'm fine brother, what about you", type: "outgoing" },
+                    { text: "I'm great... We are waiting for you.", type: "incoming" },
+                    { text: "Okey, I'll come...", type: "outgoing" },
+                ]
+            },
+            "kayra": {
+                name: "Kayra Gültekin",
+                img: "asset/kayra/a (5).jpg",
+                profileUrl: "kayra.html",
+                messages: [
+                    { text: "I miss you cousin!!!!! Where are you bro?", type: "incoming" },
+                    { text: "I'm in Italy, where are you???", type: "outgoing" },
+                    { text: "WoW!!! Thats fantastic... I am in Turkey.", type: "incoming" },
+                ]
+            },
+            "scarlett": {
+                name: "Scarlett Anderson",
+                img: "asset/scarlett/1 (14).jpg",
+                profileUrl: "scarlett.html",
+                messages: [
+                    { text: "I love your profile!", type: "incoming" },
+                    { text: "Thanks, the ligth and ambiance was so great :)", type: "outgoing" }
+                ]
+            }
+        };
+
+        const chatBoxArea = document.getElementById("chat-box-area");
+        const messageInput = document.getElementById("message-input");
+        const sendBtn = document.getElementById("send-btn");
+        const headerName = document.getElementById("header-username");
+        const headerImg = document.getElementById("header-img");
+
+        window.onload = function () {
+            // Başlangıçta mesajları yükle
+            loadMessages(activeUser);
+
+            // Eğer mobildeysek ve sayfa yeni açıldıysa sadece listeyi göster
+            if (window.innerWidth <= 768) {
+                sidebar.style.display = 'flex';
+                chatBox.style.display = 'none';
+            }
+        };
+
+        // --- KULLANICI DEĞİŞTİRME ---
+        function changeUser(userId) {
+            activeUser = userId;
+
+            // Header bilgilerini güncelle
+            headerName.innerText = conversations[userId].name;
+            headerImg.src = conversations[userId].img;
+
+            // Görsel seçim (background rengi)
+            document.querySelectorAll('.user-item').forEach(item => item.classList.remove('active'));
+            const selectedUser = document.getElementById('user-' + userId);
+            if (selectedUser) selectedUser.classList.add('active');
+
+            // Mesajları yükle
+            loadMessages(userId);
+
+            // MOBİL İÇİN: Biri seçilince Listeyi Gizle, Sohbeti Aç
+            if (window.innerWidth <= 768) {
+                sidebar.style.display = 'none';
+                chatBox.style.display = 'flex';
+            }
+        }
+
+        // --- GERİ DÖN (MOBİL İÇİN) ---
+        function backToList() {
+            if (window.innerWidth <= 768) {
+                sidebar.style.display = 'flex'; // Listeyi geri getir
+                chatBox.style.display = 'none'; // Sohbeti gizle
+            }
+        }
+
+        // --- PROFİLE GİT ---
+        function goToProfile() {
+            const currentUserData = conversations[activeUser];
+            if (currentUserData && currentUserData.profileUrl) {
+                window.location.href = currentUserData.profileUrl;
+            }
+        }
+
+        function loadMessages(userId) {
+            chatBoxArea.innerHTML = "";
+            const msgs = conversations[userId].messages;
+            if (msgs) {
+                msgs.forEach(msg => {
+                    createMessageBubble(msg.text, msg.type);
+                });
+            }
+            scrollToBottom();
+        }
+
+        function createMessageBubble(text, type) {
+            const div = document.createElement("div");
+            div.classList.add("message", type);
+            div.innerText = text;
+            chatBoxArea.appendChild(div);
+        }
+
+        function sendMessage() {
+            const text = messageInput.value.trim();
+            if (text === "") return;
+
+            createMessageBubble(text, "outgoing");
+            if (conversations[activeUser]) {
+                conversations[activeUser].messages.push({ text: text, type: "outgoing" });
+            }
+
+            messageInput.value = "";
+            scrollToBottom();
+
+            setTimeout(receiveMessage, 1500);
+        }
+
+        // 1. Bu değişkeni fonksiyonun DIŞINA en tepeye ekle.
+        // Bu sayaç, hangi mesajda kaldığımızı hafızada tutacak.
+        let replyIndex = 0;
+
+        function receiveMessage() {
+            // 2. Sunumda görünmesini istediğin senaryoyu sırasıyla buraya yaz.
+            const replies = [
+                "Hi! 👋",                               // 1. Cevap
+                "I'm watching TV, what about you?",     // 2. Cevap
+                "Nice! Are you available for tonight?", // 3. Cevap
+                "Great! Let's meet at 8 PM then.",      // 4. Cevap
+                "See you there!",                       // 5. Cevap
+                "Bye!"                                  // 6. Cevap
+            ];
+            // 3. Rastgele seçim (Math.random) yerine sıradaki mesajı alıyoruz.
+            // replyIndex değişkenini kullanıyoruz.
+            const selectedReply = replies[replyIndex];
+
+            createMessageBubble(selectedReply, "incoming");
+
+            if (conversations[activeUser]) {
+                conversations[activeUser].messages.push({ text: selectedReply, type: "incoming" });
+            }
+            scrollToBottom();
+
+            // 4. Sayacı bir sonraki mesaj için artırıyoruz.
+            // (% replies.length) kısmı, mesajlar biterse listenin en başına dönmesini sağlar (hata vermez).
+            replyIndex = (replyIndex + 1) % replies.length;
+        }
+
+        function scrollToBottom() {
+            chatBoxArea.scrollTop = chatBoxArea.scrollHeight;
+        }
+
+        sendBtn.addEventListener("click", sendMessage);
+        messageInput.addEventListener("keypress", function (e) {
+            if (e.key === "Enter") sendMessage();
+        });
+
+        // Ekran boyutu değişirse düzelt (Örn: Telefondan yatay moda geçiş)
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                sidebar.style.display = 'flex';
+                chatBox.style.display = 'flex';
+            }
+        });
+
+    </script>
+</body>
+
+</html>

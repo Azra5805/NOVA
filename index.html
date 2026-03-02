@@ -1,0 +1,1547 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova • Home</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar">
+
+        <div class="nav-logo">
+            <a href="index.html">
+                <img src="asset/image/LOGO.png" alt="Nova Logo">
+            </a>
+        </div>
+
+        <div class="nav-items">
+            <a href="index.html">
+                <i class="fa-solid fa-house"></i>
+            </a>
+
+            <i class="fa-solid fa-user-plus" onclick="openLogin()" style="cursor: pointer;" title="Hesap Değiştir"></i>
+
+            <a href="dm.html">
+                <i class="fa-brands fa-facebook-messenger"></i>
+            </a>
+
+            <a href="post.html">
+                <i class="fa-regular fa-square-plus"></i>
+            </a>
+
+            <a href="notification.html">
+                <i class="fa-regular fa-heart"></i>
+            </a>
+
+            <div class="icon user-profile">
+                <a href="profil.html">
+                    <img src="asset/image/5.jpg" alt="profil">
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="main">
+        <div class="wrapper">
+
+            <div class="left-col">
+
+                <div class="status-wrapper">
+                    <div class="status-card" onclick="openStory('me')">
+                        <div class="profile-pic"><img src="asset/image/5.jpg" alt=""></div>
+                        <p class="username">Your Story</p>
+                    </div>
+                    <div class="status-card" onclick="openStory('ali')">
+                        <div class="profile-pic"><img src="asset/scarlett/1 (14).jpg" alt=""></div>
+                        <p class="username">Scarlett Anderson</p>
+                    </div>
+                    <div class="status-card" onclick="openStory('ayse')">
+                        <div class="profile-pic"><img src="asset/dog/1.jpg" alt=""></div>
+                        <p class="username">Dog Lucky</p>
+                    </div>
+                    <div class="status-card" onclick="openStory('mert')">
+                        <div class="profile-pic"><img src="asset/kayra/a (5).jpg" alt=""></div>
+                        <p class="username">Kayra Gültekin</p>
+                    </div>
+                    <div class="status-card" onclick="openStory('zeynep')">
+                        <div class="profile-pic"><img src="asset/james/1.jpg" alt=""></div>
+                        <p class="username">James Hill</p>
+                    </div>
+                </div>
+
+                <div id="feed-container"></div>
+            </div>
+
+            <div class="right-col">
+                <div class="profile-card">
+                    <div class="profile-pic">
+                        <a href="profile2.html"></a>
+                        <img src="asset/dog/1.jpg" alt="">
+                    </div>
+                    <div>
+                        <p class="username">Dog Lucky</p>
+                        <p class="sub-text">Son of Emre Çelik</p>
+                    </div>
+                    <button class="action-btn" onclick="openLogin()">Change Account</button>
+                </div>
+
+                <p class="suggestion-text">Recommended For You</p>
+
+                <div class="suggestion-card">
+                    <div class="profile-pic">
+                        <a href="donghyun.html"> <img src="asset/image/24.jpg" alt="">
+                        </a>
+                    </div>
+                    <div>
+                        <p class="username">Donghyun Shin</p>
+                        <p class="sub-text">He follows you</p>
+                    </div>
+                    <button class="action-btn" onclick="toggleFollow(this)">Follow</button>
+                </div>
+
+                <div class="suggestion-card">
+                    <div class="profile-pic">
+                        <a href="olga.html"> <img src="asset/image/olga.jpg" alt="">
+                        </a>
+                    </div>
+                    <div>
+                        <p class="username">Merry Olga</p>
+                        <p class="sub-text">Recommended From Nova</p>
+                    </div>
+                    <button class="action-btn" onclick="toggleFollow(this)">Follow</button>
+                </div>
+            </div>
+
+            <div id="login-modal" class="login-overlay" style="display:none;">
+                <div class="login-card">
+                    <span class="close-login" onclick="closeLogin()">&times;</span>
+
+                    <img src="asset/image/LOGO.png" alt="Logo" class="login-logo">
+
+                    <p class="login-title">Swing Account / Add Account</p>
+
+                    <form onsubmit="handleLogin(event)">
+                        <input type="text" id="login-username" class="login-input" placeholder="Username" required>
+                        <input type="password" id="login-password" class="login-input" placeholder="Password" required>
+
+                        <button type="submit" class="login-btn">Log In</button>
+                    </form>
+
+                    <p id="login-error" style="color:rgb(0, 183, 255); font-size:12px; display:none; margin-top:10px;">
+                    </p>
+                </div>
+            </div>
+    </section>
+
+    <div id="story-modal" class="modal-overlay">
+
+        <div class="modal-content" style="position: relative;">
+
+            <span class="story-close-btn" onclick="closeStory()">&times;</span>
+
+            <div class="story-header" onclick="visitProfile()"
+                style="cursor: pointer; position: absolute; top: 20px; left: 20px; z-index: 1000; display: flex; align-items: center; gap: 12px; width: auto;">
+
+                <img id="story-header-profile" src="" alt="Profile"
+                    style="width: 45px; height: 45px; min-width: 45px; border-radius: 50%; border: 2px solid white; object-fit: cover; background-color: #333;">
+
+                <span id="story-header-username"
+                    style="color: white; font-size: 15px; font-weight: 600; text-shadow: 0 2px 5px rgba(0,0,0,0.9);">
+                    User Name
+                </span>
+
+                <i id="story-delete-btn" class="fa-solid fa-trash"
+                    onclick="event.stopPropagation(); deleteCurrentStory()"
+                    style="color: #ff4d4d; font-size: 18px; margin-left: 10px; cursor: pointer; display: none; text-shadow: 0 2px 5px rgba(0,0,0,0.9);">
+                </i>
+            </div>
+
+            <img id="full-story-img" src="" alt="Story">
+
+            <div class="story-actions">
+                <input type="text" placeholder="Text Massage..." onkeypress="sendStoryMessage(this)">
+
+                <div style="display:flex; gap:15px; align-items:center;">
+                    <i class="fa-regular fa-heart" id="story-like-btn" onclick="toggleStoryLike()"
+                        style="color:white; font-size:24px; cursor:pointer;"></i>
+                    <i class="fa-regular fa-paper-plane" style="color:white; font-size:24px;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="home.js"></script>
+    <script src="story.js"></script>
+    <script src="mainpost.js"></script>
+
+    <script>
+        function timeAgo(dateString) {
+            if (!dateString) return "JUST NOW";
+
+            const date = new Date(dateString);
+            const now = new Date();
+            const seconds = Math.floor((now - date) / 1000);
+            const minutes = Math.floor(seconds / 60);
+            const hours = Math.floor(minutes / 60);
+            const days = Math.floor(hours / 24);
+
+            if (seconds < 60) return "JUST NOW";
+            if (minutes < 60) return `${minutes} MINUTES AGO`;
+            if (hours < 24) return `${hours} HOURS AGO`;
+            if (days < 7) return `${days} DAYS AGO`;
+
+            // 7 günden eskiyse normal tarih göster
+            return date.toLocaleDateString();
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Hafızadan yeni atılan storyleri çek
+            const localStories = JSON.parse(localStorage.getItem('stories_db')) || [];
+
+            // 2. Story çubuğunu bul
+            const storyBar = document.getElementById('story-bar');
+
+            if (storyBar && localStories.length > 0) {
+                // En yeni hikaye en başta görünsün diye ters çeviriyoruz
+                localStories.reverse().forEach(story => {
+
+                    // A) story.js veritabanına ekle (HATA BURADAYDI, DÜZELDİ)
+                    if (typeof storyDatabase !== 'undefined') {
+                        // BURASI ARTIK 'story.id' (Eskiden post.id yazıyordu)
+                        storyDatabase[story.id] = {
+                            storyImg: story.img,
+                            profileImg: story.user.pic,
+                            username: story.user.name,
+                            profileUrl: "profil.html"
+                        };
+                    }
+
+                    // B) HTML Kutusunu oluştur
+                    const newStoryHTML = `
+                    <div class="status-card" onclick="openStory('${story.id}')">
+                        <div class="status-pic">
+                            <img src="${story.user.pic}" onerror="this.src='asset/image/5.jpg'">
+                        </div>
+                        <p class="username">${story.user.name}</p>
+                    </div>
+                    `;
+
+                    // C) Bara Ekle: "Add Story" butonunun hemen sağına
+                    const addStoryBtn = storyBar.firstElementChild;
+                    if (addStoryBtn) {
+                        addStoryBtn.insertAdjacentHTML('afterend', newStoryHTML);
+                    } else {
+                        storyBar.innerHTML += newStoryHTML;
+                    }
+                });
+            }
+        });
+    </script>
+
+    <script>
+        // --- LOGIN İŞLEMLERİ ---
+
+        // 1. Modalı Aç
+        // --- AUTH SERVICE (KİMLİK DOĞRULAMA - BACKEND UYUMLU) ---
+        class AuthService {
+            // Backend'e giriş isteği atma fonksiyonu
+            static async login(username, password) {
+
+                // --- BURASI BACKEND GELDİĞİNDE AÇILACAK KISIM ---
+                /*
+                try {
+                    const response = await fetch('https://api.seninsiten.com/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ username, password })
+                    });
+                    const data = await response.json();
+                    if(data.token) {
+                        localStorage.setItem('token', data.token); // Anahtarı sakla
+                        localStorage.setItem('currentUser', JSON.stringify(data.user));
+                        return true;
+                    }
+                } catch (error) {
+                    console.error("Login hatası:", error);
+                }
+                */
+                // -----------------------------------------------
+
+                // --- ŞİMDİLİK SİMÜLASYON (Backend gelene kadar) ---
+                console.log(`Backend'e gönderiliyor: ${username} - ${password}`);
+
+                // Sanki backend "Tamam giriş başarılı" demiş gibi yapıyoruz:
+                const mockUser = {
+                    username: username,
+                    name: username.charAt(0).toUpperCase() + username.slice(1), // Baş harfi büyüt
+                    pic: "https://randomuser.me/api/portraits/lego/1.jpg" // Rastgele profil fotosu
+                };
+
+                // Kullanıcıyı tarayıcıya kaydet (Oturum açıldı)
+                localStorage.setItem('currentUser', JSON.stringify(mockUser));
+                return true;
+            }
+
+            // Çıkış Yapma
+            static logout() {
+                localStorage.removeItem('currentUser');
+                localStorage.removeItem('token');
+                window.location.reload();
+            }
+        }
+
+        // --- LOGIN UI İŞLEMLERİ ---
+
+        function openLogin() {
+            document.getElementById('login-modal').style.display = 'flex';
+            document.getElementById('login-error').style.display = 'none';
+        }
+
+        function closeLogin() {
+            document.getElementById('login-modal').style.display = 'none';
+        }
+
+        // Run when form is submitted
+        async function handleLogin(event) {
+            event.preventDefault(); // Prevent page refresh
+
+            const userVal = document.getElementById('login-username').value;
+            const passVal = document.getElementById('login-password').value;
+            const errorMsg = document.getElementById('login-error');
+
+            if (userVal.length < 3) {
+                errorMsg.innerText = "Username is too short!";
+                errorMsg.style.display = "block";
+                return;
+            }
+
+            // Call the service
+            const success = await AuthService.login(userVal, passVal);
+
+            if (success) {
+                alert("Login Successful! Welcome " + userVal);
+                closeLogin();
+
+                // Reload the page so new profile photo and name appear
+                window.location.reload();
+            } else {
+                errorMsg.innerText = "Login failed!";
+                errorMsg.style.display = "block";
+            }
+        }
+
+        // Modal dışına tıklayınca kapatma
+        window.onclick = function (event) {
+            let modal = document.getElementById('login-modal');
+            if (event.target == modal) closeLogin();
+
+            // Story ve Share modalları için de kontrol (Varsa)
+            let sModal = document.getElementById('story-modal');
+            let shModal = document.getElementById('share-modal');
+            if (event.target == sModal) sModal.style.display = "none";
+            if (event.target == shModal) shModal.style.display = "none";
+        }
+
+        // 4. Siyah boşluğa tıklayınca kapat
+        window.onclick = function (event) {
+            var modal = document.getElementById('login-modal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // ... Diğer fonksiyonların (openLogin, goToProfile vs.) hemen altına ekle ...
+
+        // TAKİP ETME FONKSİYONU
+        function toggleFollow(btn) {
+            if (btn.innerText === "Follow") {
+                // Takip ediliyorsa
+                btn.innerText = "You follow";
+                btn.style.color = "black";
+                btn.style.fontWeight = "normal";
+            } else {
+                // Takipten çıkılırsa
+                btn.innerText = "Follow";
+                btn.style.color = "#0095f6"; // Instagram Mavisi
+                btn.style.fontWeight = "bold";
+            }
+        }
+
+        // --- DİNAMİK STORY YÜKLEYİCİ (MEVCUT SİSTEME ENTEGRE) ---
+        // Bu kod sayfa açılınca çalışır ve yeni atılan storyleri senin barına ekler.
+
+        // INIT KISMINA EKLE (renderFeed'in hemen üstüne)
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (currentUser) {
+            // Eğer giriş yapılmışsa Navbar'daki resmi ve linki güncelle
+            const navImg = document.querySelector('.nav-profile-img');
+            if (navImg) navImg.src = currentUser.pic;
+            console.log("Active User:", currentUser.username);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const storyBar = document.getElementById('story-bar');
+
+            // 1. Hafızadan yeni hikayeleri çek
+            const localStories = JSON.parse(localStorage.getItem('stories_db')) || [];
+
+            localStories.forEach(story => {
+                // A) Story.js veritabanına bu yeni kullanıcıyı tanıt
+                // (Böylece openStory fonksiyonu bu ID'yi tanıyacak)
+                if (typeof storyDatabase !== 'undefined') {
+                    storyDatabase[post.id] = { // 'story.id' kullanıyoruz
+                        storyImg: story.img,
+                        profileImg: story.user.pic,
+                        username: story.user.name,
+                        profileUrl: "profil.html"
+                    };
+                }
+
+                // B) HTML Şablonunu Senin Tasarımınla Birebir Oluştur
+                // Senin "status-card" ve "profile-pic" classlarını kullanıyoruz.
+                const newStoryHTML = `
+            <div class="status-card" onclick="openStory('${story.id}')">
+                <div class="profile-pic">
+                    <img src="${story.user.pic}" alt="${story.user.name}">
+                </div>
+                <p class="username">${story.user.name}</p>
+            </div>
+            `;
+
+                // C) Bara Ekle (Mevcut olanların yanına)
+                storyBar.insertAdjacentHTML('beforeend', newStoryHTML);
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderFeed(); // Load posts on page load
+        });
+
+        // --- 1. RENDER POSTS ---
+        function renderFeed() {
+            const feedContainer = document.getElementById('feed-container');
+
+            // Fetch data from LocalStorage
+            const posts = JSON.parse(localStorage.getItem('posts_db')) || [];
+            const savedList = JSON.parse(localStorage.getItem('saved_db')) || [];
+
+            // If no posts exist
+            if (posts.length === 0) {
+                feedContainer.innerHTML = `<div style="text-align:center; padding:40px; color:#8e8e8e;">No posts yet.</div>`;
+                return;
+            }
+
+            feedContainer.innerHTML = ""; // Clear container
+
+            posts.forEach(post => {
+                // Check if Liked
+                const isLiked = post.likesList && post.likesList.includes('me');
+                const likeClass = isLiked ? "fa-solid" : "fa-regular";
+                const likeColor = isLiked ? "red" : "inherit";
+
+                // Check if Saved
+                const isSaved = savedList.includes(post.id);
+                const saveClass = isSaved ? "fa-solid" : "fa-regular";
+
+                // Prepare Comments (Show last 2)
+                let commentsHTML = "";
+                if (post.comments && post.comments.length > 0) {
+                    post.comments.slice(-2).forEach(c => {
+                        commentsHTML += `
+                <div style="margin-bottom: 4px; font-size: 14px;">
+                    <span style="font-weight: 600; margin-right: 5px;">${c.user}</span>${c.text}
+                </div>`;
+                    });
+                }
+
+                // Create HTML Template
+                const postHTML = `
+        <div class="post" id="post-${post.id}" style="background:white; border:1px solid #dbdbdb; border-radius:8px; margin-bottom:15px;">
+            <div class="post-header" style="display:flex; align-items:center; padding:10px;">
+                <img src="${post.user.pic}" style="width:32px; height:32px; border-radius:50%; margin-right:10px; object-fit:cover;" onerror="this.src='asset/image/5.jpg'">
+                <span style="font-weight:600; font-size:14px;">${post.user.name}</span>
+                
+                <i class="fa-solid fa-ellipsis" onclick="deletePost('${post.id}')" style="margin-left:auto; cursor:pointer;" title="Delete Post"></i>
+            </div>
+
+            <div class="post-img" ondblclick="toggleLike('${post.id}')" style="cursor:pointer;">
+                <img src="${post.img}" style="width:100%; display:block;">
+            </div>
+
+            <div class="post-content" style="padding:10px;">
+                <div style="display:flex; justify-content:space-between; font-size:24px; margin-bottom:10px;">
+                    <div style="display:flex; gap:15px;">
+                        <i class="${likeClass} fa-heart" onclick="toggleLike('${post.id}')" style="color:${likeColor}; cursor:pointer;"></i>
+                        <i class="fa-regular fa-comment" onclick="focusComment('${post.id}')" style="cursor:pointer;"></i>
+                        <i class="fa-regular fa-paper-plane" onclick="sharePost('${post.id}')" style="cursor:pointer;"></i>
+                    </div>
+                    <div>
+                        <i class="${saveClass} fa-bookmark" onclick="toggleSave('${post.id}')" style="cursor:pointer;"></i>
+                    </div>
+                </div>
+
+                <div style="font-weight:600; font-size:14px; margin-bottom:5px;">
+                    ${post.likes || 0} likes
+                </div>
+
+                <div style="font-size:14px; margin-bottom:5px;">
+                    <span style="font-weight:600; margin-right:5px;">${post.user.name}</span>
+                    ${post.desc}
+                </div>
+
+                <div id="comments-area-${post.id}">
+                    ${commentsHTML}
+                </div>
+                
+                <div style="color:#8e8e8e; font-size:10px; margin-top:5px; text-transform:uppercase;">JUST NOW</div>
+
+                <div style="border-top:1px solid #efefef; margin-top:10px; padding-top:10px; display:flex;">
+                    <input type="text" id="input-${post.id}" placeholder="Add a comment..." style="border:none; width:100%; outline:none; font-size:14px;">
+                    <button onclick="addComment('${post.id}')" style="border:none; background:none; color:#0095f6; font-weight:600; cursor:pointer;">Post</button>
+                </div>
+            </div>
+        </div>`;
+
+                feedContainer.insertAdjacentHTML('afterbegin', postHTML);
+            });
+        }
+
+        // --- 2. DELETE FUNCTION (NEW) ---
+        // index.html içindeki deletePost fonksiyonunu bununla değiştir:
+        window.deletePost = function (postId) {
+            if (confirm("Bu gönderiyi silmek istediğine emin misin?")) {
+                // 1. Postları çek
+                let posts = JSON.parse(localStorage.getItem('posts_db')) || [];
+
+                // 2. Silinecek post hariç diğerlerini filtrele
+                let newPosts = posts.filter(post => post.id !== postId);
+
+                // 3. Eğer sayı değişmediyse (ID bulunamadıysa) hata vermesin diye kontrol
+                if (posts.length === newPosts.length) {
+                    console.log("Silinecek ID bulunamadı, tip uyuşmazlığı olabilir.");
+                    // ID string/number karışmış olabilir, bir de öyle deneyelim
+                    newPosts = posts.filter(post => String(post.id) !== String(postId));
+                }
+
+                // 4. Güncel listeyi kaydet
+                localStorage.setItem('posts_db', JSON.stringify(newPosts));
+
+                // 5. Profil sayfasındaki "Silinenler" listesine de ekleyelim ki oradan da kalksın
+                let deletedIDs = JSON.parse(localStorage.getItem('deleted_ids_db')) || [];
+                if (!deletedIDs.includes(postId)) {
+                    deletedIDs.push(postId);
+                    localStorage.setItem('deleted_ids_db', JSON.stringify(deletedIDs));
+                }
+
+                // 6. Sayfayı yenile (En temiz çözüm)
+                window.location.reload();
+            }
+        }
+
+        // --- 3. LIKE FUNCTION ---
+        window.toggleLike = function (postId) {
+            let posts = JSON.parse(localStorage.getItem('posts_db')) || [];
+            let postIndex = posts.findIndex(p => p.id === postId);
+
+            if (postIndex > -1) {
+                let post = posts[postIndex];
+                if (!post.likesList) post.likesList = [];
+
+                const myIndex = post.likesList.indexOf('me');
+
+                if (myIndex === -1) {
+                    post.likesList.push('me'); // Like
+                    post.likes++;
+                } else {
+                    post.likesList.splice(myIndex, 1); // Unlike
+                    post.likes--;
+                }
+
+                posts[postIndex] = post;
+                localStorage.setItem('posts_db', JSON.stringify(posts));
+                renderFeed();
+            }
+        }
+
+        // --- 4. SAVE FUNCTION ---
+        window.toggleSave = function (postId) {
+            let saved = JSON.parse(localStorage.getItem('saved_db')) || [];
+            const index = saved.indexOf(postId);
+
+            if (index === -1) {
+                saved.push(postId); // Add to saved
+            } else {
+                saved.splice(index, 1); // Remove from saved
+            }
+
+            localStorage.setItem('saved_db', JSON.stringify(saved));
+            renderFeed();
+        }
+
+        // --- 5. COMMENT FUNCTION ---
+        window.addComment = function (postId) {
+            const input = document.getElementById(`input-${postId}`);
+            const text = input.value.trim();
+
+            if (!text) return;
+
+            let posts = JSON.parse(localStorage.getItem('posts_db')) || [];
+            let postIndex = posts.findIndex(p => p.id === postId);
+
+            if (postIndex > -1) {
+                let post = posts[postIndex];
+                if (!post.comments) post.comments = [];
+
+                post.comments.push({
+                    user: 'kodinnggg',
+                    text: text
+                });
+
+                posts[postIndex] = post;
+                localStorage.setItem('posts_db', JSON.stringify(posts));
+
+                input.value = "";
+                renderFeed();
+            }
+        }
+
+        window.focusComment = function (postId) {
+            document.getElementById(`input-${postId}`).focus();
+        }
+
+        // --- 6. SHARE FUNCTION ---
+        window.sharePost = function (postId) {
+            alert("Post sent to friends! ✈️");
+        }
+
+    </script>
+
+    <style>
+        /* CSS */
+
+        /* Kapsayıcıyı relative yapıyoruz ki içindekileri serbestçe yerleştirelim */
+        .modal-content {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header'ı resmin sol üstüne yapıştırıyoruz */
+        .story-header {
+            position: absolute;
+            /* Resmi serbest bırak */
+            top: 20px;
+            left: 20px;
+            z-index: 999;
+            /* Resmin ÜSTÜNE ÇIKAR (En önemli kod bu) */
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Profil resmi ayarları */
+        .story-header img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid white;
+            object-fit: cover;
+        }
+
+        /* İsim ayarları */
+        .story-header span {
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+            /* Okunması için gölge */
+        }
+
+        /* --- Index.html için Eklenecek Post Stilleri --- */
+
+        .post-card {
+            /* Instagram Post'un ana genişliği (feed'in ortasında) */
+            max-width: 470px;
+            margin: 0 auto 20px auto;
+            border: 1px solid #dbdbdb;
+            background: white;
+            border-radius: 3px;
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;
+        }
+
+        .post-header img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .post-header span {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .post-image img {
+            width: 100%;
+            /* Resim oranını koruyarak post kartını doldurur */
+        }
+
+        .post-actions {
+            padding: 8px 16px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .post-actions .left-icons i,
+        .post-actions .right-icon i {
+            font-size: 24px;
+            margin-right: 15px;
+            cursor: pointer;
+            color: #1d0789;
+            /* İkon rengi */
+        }
+
+        /* Beğenilen kalp için renk */
+        .post-actions .left-icons i.fa-solid.fa-heart.liked {
+            color: rgba(64, 2, 151, 0.711);
+        }
+
+        .post-likes-caption {
+            padding: 0 16px 8px 16px;
+            font-size: 14px;
+        }
+
+        .post-likes-caption span.likes-count {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .post-likes-caption span.username {
+            font-weight: 600;
+            margin-right: 5px;
+        }
+
+        /* --- SADECE STORY GLOW EFEKTİ --- */
+
+        /* Geçişin yumuşak olması için */
+        .status-card .profile-pic {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Üstüne gelince BÜYÜME ve RENKLİ IŞIK (GLOW) */
+        .status-card:hover .profile-pic {
+            transform: scale(1.15);
+            /* Hafifçe büyüt */
+
+            /* İşte o çerçeve rengindeki ışık (Turuncu ve Pembe karışımı) */
+            box-shadow:
+                0 0 15px 2px rgba(31, 21, 216, 0.641),
+                /* Turuncu Işık */
+                0 0 30px 5px rgba(53, 1, 69, 0.6);
+            /* Pembe/Kırmızı Işık */
+        }
+
+        /* --- SAĞ MENÜ ÖZEL EFEKTLERİ (DİĞER YERLERE DOKUNMADAN) --- */
+
+        /* 1. BUTONLAR (Switch / Follow) - Hareket ve Yazı Işıması */
+        .right-col .action-btn {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            /* Esnek geçiş */
+        }
+
+        /* Hover Durumu */
+        .right-col .action-btn:hover {
+            transform: scale(1.15) translateX(-2px);
+            /* Hafif büyü ve sola kay */
+            color: #2c045c;
+            /* Yazı beyazlaşsın */
+            /* Turuncu ve Mavi Karışık Neon Yazı Işıması */
+            text-shadow:
+                0 0 5px #0a4c92,
+                0 0 10px #40035d,
+                0 0 20px #0a70e4;
+        }
+
+        /* 2. PROFİL KARTLARI (Kapsayıcılar) - Hareket ve Hafif Ortam Işığı */
+        .right-col .profile-card,
+        .right-col .suggestion-card {
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            /* Işık için köşe yuvarlama */
+            padding: 5px;
+            /* Kenarlara yapışmasın */
+        }
+
+        /* Hover Durumu */
+        .right-col .profile-card:hover,
+        .right-col .suggestion-card:hover {
+            transform: translateY(-3px) scale(1.02);
+            /* Havalan ve hafif büyü */
+            background: rgba(255, 255, 255, 0.03);
+            /* Çok hafif arka plan aydınlanması */
+            /* Kartın etrafına hafif ambiyans ışığı */
+            box-shadow:
+                0 5px 15px rgba(0, 0, 0, 0.2),
+                0 0 20px rgba(240, 148, 51, 0.1),
+                0 0 20px rgba(0, 149, 246, 0.1);
+        }
+
+        /* 3. SAĞ MENÜDEKİ PROFİL FOTOLARI - Büyüme, Dönme ve Çerçeve Işığı */
+        .right-col .profile-pic img {
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+            /* Işık için kenarlık yeri ayır */
+        }
+
+        /* Kartın üstüne gelince fotonun tepkisi */
+        .right-col .profile-card:hover .profile-pic img,
+        .right-col .suggestion-card:hover .profile-pic img {
+            transform: scale(1.15) rotate(10deg);
+            /* Büyü ve dön */
+            border-color: #850caa;
+            /* Kenarlık rengini değiştir */
+            /* Fotonun etrafına güçlü halka ışık */
+            box-shadow:
+                0 0 10px 2px rgba(60, 19, 172, 0.8),
+                0 0 15px 4px rgba(0, 149, 246, 0.6);
+        }
+
+        /* --- INSTAGRAM İKONLARI VE PROFİL EFEKTLERİ --- */
+
+        /* 1. NAVBAR İKONLARI (Ev, Mesaj, Kalp, Ekle) */
+        .nav-items i {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            /* Zıplama efekti */
+            color: #262626;
+            /* Varsayılan renk */
+            background: none;
+        }
+
+        /* İKON HOVER: RENK GEÇİŞİ, BÜYÜME VE IŞIMA */
+        .nav-items i:hover {
+            transform: scale(1.3) translateY(-2px);
+            /* Büyü ve yukarı zıpla */
+
+            /* İkonun içini Instagram Gradient Rengi Yapma (Sihirli Kısım) */
+            background: -webkit-linear-gradient(45deg, #f554a7, #820d62, #33034f, #0a7aad, #230577);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            /* Etrafına aynı tonlarda ışık yay (Glow) */
+            filter: drop-shadow(0 4px 5px rgba(2, 2, 111, 0.5));
+        }
+
+        /* 2. NAVBAR PROFİL RESMİ */
+        .nav-profile-img {
+            transition: all 0.3s ease;
+            border: 1px solid #dbdbdb;
+            /* Varsayılan ince çizgi */
+            box-sizing: border-box;
+        }
+
+        /* PROFİL HOVER: ÇERÇEVE HALKASI VE DÖNME */
+        .icon.user-profile a:hover .nav-profile-img {
+            transform: scale(1.15) rotate(5deg);
+            /* Büyü ve hafif dön */
+            border: 2px solid transparent;
+            /* Eski kenarlığı gizle */
+
+            /* Instagram Story Halkası Efekti + Işıma */
+            box-shadow:
+                0 0 0 2px #fff,
+                /* İç boşluk (beyaz) */
+                0 0 0 4px #b756c0,
+                /* Pembe Halka */
+                0 0 15px 2px rgba(17, 136, 169, 0.6);
+            /* Dış Işıma (Glow) */
+
+            border-radius: 50%;
+        }
+
+        /* --- NAVBAR PROFİL RESMİ STANDARDI (TÜM SAYFALAR İÇİN) --- */
+
+        /* Hem ID hem Class ile yakalıyoruz ki kaçış olmasın */
+        .navbar .icon.user-profile img,
+        .nav-profile-img,
+        #nav-profile-img {
+
+            /* 1. ÖLÇÜLER (Altın Oran: 30px) */
+            width: 30px !important;
+            height: 30px !important;
+            min-width: 30px !important;
+            /* Küçülmeyi engelle */
+            min-height: 30px !important;
+
+            /* 2. ŞEKİL (Tam Yuvarlak) */
+            border-radius: 50% !important;
+
+            /* 3. GÖRÜNTÜ (Ezilmeyi engelle - Çok önemli) */
+            object-fit: cover !important;
+
+            /* 4. ÇERÇEVE VE HİZALAMA */
+            border: 1px solid #dbdbdb !important;
+            /* İnce gri çizgi */
+            padding: 0 !important;
+            margin: 0 !important;
+            display: block !important;
+
+            /* 5. GÖLGE YOK (Temiz görünüm için) */
+            box-shadow: none;
+        }
+
+        /* Kapsayıcı kutuyu da hizalayalım ki resim kaymasın */
+        .navbar .icon.user-profile,
+        .navbar .nav-items a {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            height: auto !important;
+        }
+
+        /* --- ZORLAYICI POST EFEKTİ (FIX) --- */
+
+        /* 1. Post Kartının Normal Hali */
+        .post-card,
+        .post {
+            /* Animasyonun yumuşak olması için */
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+            position: relative !important;
+            z-index: 1 !important;
+            /* Diğerlerinin altında başla */
+        }
+
+        /* 2. Üstüne Gelince (HOVER) - BÜYÜME VE IŞIK */
+        .post-card:hover,
+        .post:hover {
+            /* Büyütme işlemi */
+            transform: scale(1.05) !important;
+
+            /* En öne getir (Diğer postların üstüne çıksın) */
+            z-index: 9999 !important;
+
+            /* Arkadan Vuran Işık (Glow) */
+            /* İlk değer Turuncu, İkinci değer Mavi */
+            box-shadow:
+                0 0 20px rgba(94, 18, 186, 0.7),
+                0 0 40px rgba(0, 149, 246, 0.7) !important;
+
+            /* Kenarlığı kaldır ki ışık net gözüksün */
+            border-color: transparent !important;
+            cursor: pointer !important;
+        }
+
+        /* --- NAVBAR PROFİL RESMİ STANDARDI (TÜM SAYFALAR İÇİN) --- */
+
+        /* Hem ID hem Class ile yakalıyoruz ki kaçış olmasın */
+        .navbar .icon.user-profile img,
+        .nav-profile-img,
+        #nav-profile-img {
+
+            /* 1. ÖLÇÜLER (Altın Oran: 30px) */
+            width: 30px !important;
+            height: 30px !important;
+            min-width: 30px !important;
+            /* Küçülmeyi engelle */
+            min-height: 30px !important;
+
+            /* 2. ŞEKİL (Tam Yuvarlak) */
+            border-radius: 50% !important;
+
+            /* 3. GÖRÜNTÜ (Ezilmeyi engelle - Çok önemli) */
+            object-fit: cover !important;
+
+            /* 4. ÇERÇEVE VE HİZALAMA */
+            border: 1px solid #dbdbdb !important;
+            /* İnce gri çizgi */
+            padding: 0 !important;
+            margin: 0 !important;
+            display: block !important;
+
+            /* 5. GÖLGE YOK (Temiz görünüm için) */
+            box-shadow: none;
+        }
+
+        /* Kapsayıcı kutuyu da hizalayalım ki resim kaymasın */
+        .navbar .icon.user-profile,
+        .navbar .nav-items a {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            height: auto !important;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Yeni atılan storyleri hafızadan çek
+            const localStories = JSON.parse(localStorage.getItem('stories_db')) || [];
+
+            // 2. Senin HTML'indeki story şeridini bul
+            const storyBar = document.querySelector('.status-wrapper');
+
+            if (storyBar && localStories.length > 0) {
+                localStories.forEach(story => {
+
+                    // A) story.js içindeki veritabanına bu yeni kişiyi KAYDET
+                    // (Böylece openStory fonksiyonun "Bu kim?" demez, açar)
+                    if (typeof storyDatabase !== 'undefined') {
+                        storyDatabase[story.id] = {
+                            storyImg: story.img,       // Paylaşılan resim
+                            profileImg: story.user.pic, // Profil resmi
+                            username: story.user.name,  // Kullanıcı adı
+                            profileUrl: "profil.html"   // Tıklayınca gideceği yer
+                        };
+                    }
+
+                    // B) HTML Kutusunu oluştur (Senin tasarımınla BİREBİR AYNI)
+                    // "status-card" ve "profile-pic" classlarını aynen kullandık
+                    const newStoryHTML = `
+                    <div class="status-card" onclick="openStory('${story.id}')">
+                        <div class="profile-pic">
+                            <img src="${story.user.pic}" alt="${story.user.name}">
+                        </div>
+                        <p class="username">${story.user.name}</p>
+                    </div>
+                    `;
+
+                    // C) Bara ekle: "Your Story" butonunun hemen sağına (En başa)
+                    const addStoryBtn = storyBar.firstElementChild; // İlk elemanı (Add Story) bul
+
+                    if (addStoryBtn) {
+                        // Eğer Add Story butonu varsa, onun hemen sonrasına ekle
+                        addStoryBtn.insertAdjacentHTML('afterend', newStoryHTML);
+                    } else {
+                        // Eğer buton yoksa listenin en başına ekle
+                        storyBar.insertAdjacentHTML('afterbegin', newStoryHTML);
+                    }
+                });
+            }
+        });
+    </script>
+
+    <style>
+        /* --- MOBİL UYUMLULUK (MEDIA QUERIES) --- */
+
+        /* Ekran genişliği 850px ve altındaysa (Tablet ve Telefon) */
+        /* --- MOBİL GÖRÜNÜM DÜZELTMESİ (GÜNCEL) --- */
+        @media (max-width: 850px) {
+
+            /* 1. Sağ Menüyü Gizle (Mobilde yer yok) */
+            .right-col {
+                display: none !important;
+            }
+
+            /* 2. Ana Taşıyıcıyı Ortalı Yap */
+            .wrapper {
+                width: 100% !important;
+                padding: 0 !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+            }
+
+            .left-col {
+                width: 100% !important;
+                max-width: 500px !important;
+                /* Postlar mobilde çok devasa olmasın */
+            }
+
+            /* 3. Story Alanı Düzenlemesi */
+            .status-wrapper {
+                width: 100% !important;
+                max-width: 500px !important;
+                /* Post hizasında dursun */
+                margin: 0 auto !important;
+                /* Ortala */
+                padding: 10px 0 !important;
+                overflow-x: auto !important;
+                scrollbar-width: none;
+                /* Çubuğu gizle (Firefox) */
+            }
+
+            .status-wrapper::-webkit-scrollbar {
+                display: none;
+                /* Çubuğu gizle (Chrome) */
+            }
+
+            /* 4. POST GÖRÜNÜMÜ (Daha Derli Toplu) */
+            .post-card,
+            .post {
+                width: 96% !important;
+                /* Kenarlardan çok hafif boşluk bırak */
+                margin: 0 auto 15px auto !important;
+                /* Ortala ve alt boşluk ver */
+                border-radius: 10px !important;
+                /* Köşeleri yuvarla */
+                border: 1px solid #dbdbdb !important;
+                /* Çerçeveyi geri getir */
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+                /* Hafif gölge ekle */
+            }
+
+            .post-image img {
+                border-radius: 2px !important;
+                /* Resim köşeleri de hafif yumuşak */
+                max-height: 550px !important;
+                /* Çok uzun resimleri sınırla */
+                object-fit: cover !important;
+                /* Resmi orantılı sığdır */
+            }
+
+            /* Navbar Düzeni */
+            .navbar {
+                padding: 0 15px !important;
+                justify-content: space-between !important;
+            }
+
+            .nav-items {
+                gap: 15px !important;
+            }
+
+            .nav-logo img {
+                height: 85px !important;
+                margin-top: 5px !important;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const feedContainer = document.getElementById('feed-container');
+
+            // 1. ANASAYFA İÇİN VARSAYILAN VERİLER (Eğer hafızada yoksa bunlar yüklenecek)
+            const defaultHomePosts = [
+                {
+                    id: 201, // Scarlett'in ID'si ile aynı olmalı
+                    user: { name: "scarlett_anderson", pic: "asset/scarlett/1 (7).jpg" },
+                    img: "asset/scarlett/1 (13).jpg",
+                    likes: 1240,
+                    caption: "Just another day in paradise 🌴",
+                    time: "2 HOURS AGO",
+                    comments: [{ user: "jameshill", text: "Great shot!" }]
+                },
+                {
+                    id: 301, // James'in ID'si
+                    user: { name: "jameshill", pic: "asset/james/1.jpg" },
+                    img: "asset/james/10.jpg",
+                    likes: 2300,
+                    caption: "Bomb Squat! 🔥",
+                    time: "5 HOURS AGO",
+                    comments: [{ user: "arch_daily", text: "Incredible design." }]
+                },
+                {
+                    id: 401, // Kayra'nın ID'si
+                    user: { name: "kayra_gultekin", pic: "asset/kayra/a (5).jpg" },
+                    img: "asset/kayra/a (2).jpg",
+                    likes: 6321,
+                    caption: "Training hard for the next match ⚽🔥",
+                    time: "8 HOURS AGO",
+                    comments: [{ user: "fan_club", text: "King! 👑" }]
+                },
+                {
+                    id: 206,
+                    user: { name: "scarlett_anderson", pic: "asset/scarlett/1 (7).jpg" },
+                    img: "asset/scarlett/1 (6).jpg",
+                    likes: 2100,
+                    caption: "Dance like nobody's watching 💃",
+                    time: "1 DAY AGO",
+                    comments: []
+                },
+                {
+                    id: 304,
+                    user: { name: "jameshill", pic: "asset/james/1.jpg" },
+                    img: "asset/james/5.jpg",
+                    likes: 3100,
+                    caption: "Late night sketches. Big things coming.",
+                    time: "1 DAY AGO",
+                    comments: [{ user: "scarlett_anderson", text: "Can't wait to see!" }]
+                },
+                {
+                    id: 406,
+                    user: { name: "kayra_gultekin", pic: "asset/kayra/a (5).jpg" },
+                    img: "asset/kayra/a (4).jpg",
+                    likes: 5632,
+                    caption: "Team dinner! Good vibes only.",
+                    time: "2 DAYS AGO",
+                    comments: []
+                }
+            ];
+
+            // 2. VERİTABANI SENKRONİZASYONU (En Önemli Kısım)
+            // LocalStorage'daki 'posts_db'yi çekiyoruz.
+            let localPosts = JSON.parse(localStorage.getItem('posts_db')) || [];
+
+            // Eğer LocalStorage boşsa veya bu postlar eksikse, varsayılanları ekle
+            defaultHomePosts.forEach(defaultPost => {
+                const exists = localPosts.some(p => p.id === defaultPost.id);
+                if (!exists) {
+                    // Veritabanı formatına uygun hale getirip ekle
+                    localPosts.push({
+                        id: defaultPost.id,
+                        img: defaultPost.img,
+                        likes: defaultPost.likes,
+                        comments: defaultPost.comments,
+                        user: defaultPost.user, // Kullanıcı bilgisini sakla
+                        desc: defaultPost.caption, // Açıklamayı sakla
+                        time: defaultPost.time
+                    });
+                }
+            });
+            // Güncel listeyi geri kaydet
+            localStorage.setItem('posts_db', JSON.stringify(localPosts));
+
+            // 3. EKRANA BASILACAK LİSTEYİ HAZIRLA
+            // --- DEĞİŞİKLİK BURADA YAPILDI ---
+            // Eskiden burada "targetIDs" ile filtreleme vardı, bu yüzden senin yeni postların görünmüyordu.
+            // Şimdi "localPosts" içindeki TÜM veriyi (senin attıkların dahil) alıyoruz.
+
+            let feedData = localPosts;
+
+            // Karıştır (Her yenilemede farklı sıralama)
+            feedData.reverse();
+
+            // Kaydedilenler Listesini Çek (İkonun dolu/boş olması için)
+            const savedList = JSON.parse(localStorage.getItem('saved_db')) || [];
+
+            // 4. POSTLARI DOM'A EKLE
+            feedContainer.innerHTML = "";
+
+            feedData.forEach(post => {
+                // Yorumları HTML'e çevir
+                let commentsHTML = "";
+                if (post.comments) {
+                    post.comments.forEach(c => {
+                        commentsHTML += `<div style="margin-bottom: 4px; font-size: 14px;"><span style="font-weight: 600; margin-right: 5px;">${c.user}</span>${c.text}</div>`;
+                    });
+                }
+
+                // Kullanıcı adı ve resim kontrolü (Eski verilerde eksik olabilir diye)
+                const uName = post.user ? post.user.name : "user";
+                const uPic = post.user ? post.user.pic : "asset/image/5.jpg";
+                const uDesc = post.desc || "";
+                const uTime = post.time || "JUST NOW";
+
+                // Kaydedildi mi kontrolü
+                const isSaved = savedList.includes(post.id);
+                const saveIconClass = isSaved ? "fa-solid" : "fa-regular"; // Dolu veya Boş ikon
+
+                const postHTML = `
+                <div class="post-card" id="home-post-${post.id}" style="background:white; border:1px solid #dbdbdb; border-radius:3px; margin-bottom:15px; max-width:470px; margin-left:auto; margin-right:auto;">
+                    
+                    <div class="post-header" style="display:flex; align-items:center; padding:10px;">
+                        <a href="${getProfileLink(uName)}" style="display:flex; align-items:center; text-decoration:none; color:black;">
+                            <img src="${uPic}" style="width:32px; height:32px; border-radius:50%; margin-right:10px; object-fit:cover; border:1px solid #efefef;">
+                            <span style="font-weight:600; font-size:14px;">${uName}</span>
+                        </a>
+                        <i class="fa-solid fa-ellipsis" style="margin-left:auto; cursor:pointer;"></i>
+                    </div>
+
+                    <div class="post-image">
+                        <img src="${post.img}" style="width:100%; display:block;" ondblclick="likeAnimation(this)">
+                    </div>
+
+                    <div class="post-content" style="padding:10px;">
+                        <div style="display:flex; justify-content:space-between; font-size:24px; margin-bottom:10px;">
+                            <div style="display:flex; gap:15px;">
+                                <i class="fa-regular fa-heart" onclick="toggleHomeLike(this)" style="cursor:pointer;"></i>
+                                <i class="fa-regular fa-comment" onclick="focusHomeComment('${post.id}')" style="cursor:pointer;"></i>
+                                <i class="fa-regular fa-paper-plane" onclick="window.location.href='dm.html'" style="cursor:pointer;"></i>
+                            </div>
+                            <div>
+                                <i class="${saveIconClass} fa-bookmark" onclick="toggleHomeSave(this, ${post.id})" style="cursor:pointer;"></i>
+                            </div>
+                        </div>
+
+                        <div style="font-weight:600; font-size:14px; margin-bottom:5px;">
+                            ${(post.likes || 0).toLocaleString()} likes
+                        </div>
+
+                        <div style="font-size:14px; margin-bottom:5px;">
+                            <span style="font-weight:600; margin-right:5px;">${uName}</span>
+                            ${uDesc}
+                        </div>
+
+                        <div style="color:#8e8e8e; font-size:14px; cursor:pointer; margin-bottom:5px;">
+                            View all comments
+                        </div>
+                        
+                        <div id="home-comments-${post.id}">
+                            ${commentsHTML}
+                        </div>
+
+                        <div style="color:#8e8e8e; font-size:10px; margin-top:5px; text-transform:uppercase;">
+                            ${uTime}
+                        </div>
+
+                        <div style="border-top:1px solid #efefef; margin-top:10px; padding-top:10px; display:flex;">
+                            <i class="fa-regular fa-face-smile" style="font-size:24px; margin-right:10px;"></i>
+                            <input type="text" id="input-home-${post.id}" placeholder="Add a comment..." style="border:none; width:100%; outline:none; font-size:14px;">
+                            <button onclick="postHomeComment(${post.id})" style="border:none; background:none; color:#0095f6; font-weight:600; cursor:pointer;">Post</button>
+                        </div>
+                    </div>
+                </div>
+                `;
+
+                feedContainer.insertAdjacentHTML('afterend', postHTML);
+            });
+        });
+
+        // --- YARDIMCI FONKSİYONLAR ---
+
+        function getProfileLink(username) {
+            if (username === 'scarlett_anderson') return 'scarlett.html';
+            if (username === 'jameshill') return 'james.html';
+            if (username === 'kayra_gultekin') return 'kayra.html';
+            return '#'; // Kendi profilin veya boş
+        }
+
+        // 1. BEĞENİ (Görsel)
+        function toggleHomeLike(btn) {
+            if (btn.classList.contains('fa-regular')) {
+                btn.classList.remove('fa-regular');
+                btn.classList.add('fa-solid');
+                btn.style.color = '#ed4956';
+                btn.style.transform = 'scale(1.2)';
+                setTimeout(() => btn.style.transform = 'scale(1)', 200);
+            } else {
+                btn.classList.remove('fa-solid');
+                btn.classList.add('fa-regular');
+                btn.style.color = 'black';
+            }
+        }
+
+        // 2. KAYDETME (DATABASE ENTEGRASYONLU)
+        function toggleHomeSave(btn, postId) {
+            // A) LocalStorage'dan kayıtlı listeyi çek
+            let savedList = JSON.parse(localStorage.getItem('saved_db')) || [];
+
+            // B) Kontrol et: Zaten kayıtlı mı?
+            const index = savedList.indexOf(postId);
+
+            if (index === -1) {
+                // Kayıtlı değilse -> EKLE
+                savedList.push(postId);
+                btn.classList.remove('fa-regular');
+                btn.classList.add('fa-solid');
+            } else {
+                // Kayıtlıysa -> SİL
+                savedList.splice(index, 1);
+                btn.classList.remove('fa-solid');
+                btn.classList.add('fa-regular');
+            }
+
+            // C) Güncel listeyi geri kaydet
+            localStorage.setItem('saved_db', JSON.stringify(savedList));
+
+            console.log("Kaydedilenler güncellendi:", savedList);
+        }
+
+        // 3. ODAKLANMA
+        function focusHomeComment(id) {
+            document.getElementById(`input-home-${id}`).focus();
+        }
+
+        // 4. YORUM YAPMA (DATABASE ENTEGRASYONLU)
+        function postHomeComment(postId) {
+            const input = document.getElementById(`input-home-${postId}`);
+            const text = input.value.trim();
+            const commentsArea = document.getElementById(`home-comments-${postId}`);
+
+            if (text !== "") {
+                // A) LocalStorage'daki postları çek
+                let localPosts = JSON.parse(localStorage.getItem('posts_db')) || [];
+
+                // B) İlgili postu bul
+                let postIndex = localPosts.findIndex(p => p.id === postId);
+
+                if (postIndex > -1) {
+                    // C) Yorum objesini oluştur
+                    const newComment = {
+                        user: "Emre Çelik", // Giriş yapmış kullanıcı adın
+                        text: text
+                    };
+
+                    // D) Postun yorumlarına ekle
+                    if (!localPosts[postIndex].comments) localPosts[postIndex].comments = [];
+                    localPosts[postIndex].comments.push(newComment);
+
+                    // E) Veritabanını güncelle
+                    localStorage.setItem('posts_db', JSON.stringify(localPosts));
+
+                    // F) Ekrana hemen bas (Sayfayı yenilemeye gerek kalmasın)
+                    const newCommentHTML = `
+                        <div style="margin-bottom: 4px; font-size: 14px;">
+                            <span style="font-weight: 600; margin-right: 5px;">Emre Çelik</span>
+                            ${text}
+                        </div>`;
+                    commentsArea.insertAdjacentHTML('beforeend', newCommentHTML);
+
+                    input.value = ""; // Inputu temizle
+                }
+            }
+        }
+
+        function likeAnimation(img) {
+            const likeBtn = img.closest('.post-card').querySelector('.fa-heart');
+            if (likeBtn.classList.contains('fa-regular')) {
+                toggleHomeLike(likeBtn);
+            }
+        }
+    </script>
+
+    <script>
+        // --- 1. AKILLI BEĞENİ FONKSİYONU (HTML DEĞİŞİKLİĞİ GEREKTİRMEZ) ---
+        function toggleHomeLike(btn) {
+            // 1. Tıklanan butonun içinde olduğu Post Kartını buluyoruz
+            const card = btn.closest('.post-card');
+
+            // 2. Kartın ID'sinden (örn: home-post-201) sadece sayıyı alıyoruz
+            const postId = card.id.replace('home-post-', '');
+
+            // 3. Veritabanını çekiyoruz
+            let posts = JSON.parse(localStorage.getItem('posts_db')) || [];
+            // "==" kullanıyoruz ki yazı/sayı fark etmesin
+            let postIndex = posts.findIndex(p => p.id == postId);
+
+            if (postIndex > -1) {
+                let post = posts[postIndex];
+                if (!post.likesList) post.likesList = [];
+                if (!post.likes) post.likes = 0;
+
+                const myIndex = post.likesList.indexOf('me');
+
+                // Görsel İşlemler (Sadece İkonu ve Sayıyı Güncelle)
+                if (btn.classList.contains('fa-regular')) {
+                    // BEĞENME
+                    btn.classList.remove('fa-regular');
+                    btn.classList.add('fa-solid');
+                    btn.style.color = '#ed4956';
+                    btn.style.transform = 'scale(1.2)';
+                    setTimeout(() => btn.style.transform = 'scale(1)', 200);
+
+                    post.likesList.push('me');
+                    post.likes++;
+                } else {
+                    // GERİ ALMA
+                    btn.classList.remove('fa-solid');
+                    btn.classList.add('fa-regular');
+                    btn.style.color = 'black';
+
+                    if (myIndex > -1) post.likesList.splice(myIndex, 1);
+                    if (post.likes > 0) post.likes--;
+                }
+
+                // --- KRİTİK NOKTA: SAYIYI GÜNCELLEME ---
+                // HTML değiştirmeden, butonun olduğu kutudaki "likes" yazısını bulup değiştiriyoruz.
+                // Yapı: .post-content > (ikonlar satırı) > (beğeni sayısı satırı)
+                const contentDiv = card.querySelector('.post-content');
+                // post-content içindeki 2. div (index 1) beğeni sayısını tutuyor
+                const likeCountDiv = contentDiv.children[1];
+
+                if (likeCountDiv) {
+                    likeCountDiv.innerHTML = `${post.likes.toLocaleString()} likes`;
+                    likeCountDiv.style.fontWeight = "600"; 
+                }
+
+                // 4. Veritabanına Kaydet
+                posts[postIndex] = post;
+                localStorage.setItem('posts_db', JSON.stringify(posts));
+            }
+        }
+
+        // --- 2. AKILLI YORUM FONKSİYONU ---
+        function postHomeComment(postId) {
+            // HTML yapısında ID postHomeComment'e gönderiliyor, o yüzden direkt kullanabiliriz.
+            const input = document.getElementById(`input-home-${postId}`);
+            const text = input.value.trim();
+            const commentsArea = document.getElementById(`home-comments-${postId}`);
+
+            if (text !== "") {
+                let posts = JSON.parse(localStorage.getItem('posts_db')) || [];
+                let postIndex = posts.findIndex(p => p.id == postId);
+
+                if (postIndex > -1) {
+                    const newComment = {
+                        user: "Emre Çelik", // Veya giriş yapan kullanıcı
+                        text: text
+                    };
+
+                    if (!posts[postIndex].comments) posts[postIndex].comments = [];
+                    posts[postIndex].comments.push(newComment);
+                    localStorage.setItem('posts_db', JSON.stringify(posts));
+
+                    // HTML Ekle
+                    const newCommentHTML = `
+                        <div style="margin-bottom: 4px; font-size: 14px;">
+                            <span style="font-weight: 600; margin-right: 5px;">Emre Çelik</span>
+                            ${text}
+                        </div>`;
+
+                    commentsArea.insertAdjacentHTML('beforeend', newCommentHTML);
+                    input.value = "";
+                }
+            }
+        }
+
+        // --- 3. ÇİFT TIKLAMA ANİMASYONU ---
+        function likeAnimation(img) {
+            // HTML yapısında onclick olmadığı için ID gelmeyebilir, parent'tan buluyoruz.
+            const card = img.closest('.post-card');
+            const likeBtn = card.querySelector('.fa-heart');
+
+            // Sadece beğenilmemişse beğen (zaten beğenildiyse geri alma)
+            if (likeBtn.classList.contains('fa-regular')) {
+                toggleHomeLike(likeBtn);
+            }
+
+        }
+
+        function toggleHomeSave(btn, postId) {
+            let saved = JSON.parse(localStorage.getItem('saved_db')) || [];
+            const index = saved.indexOf(postId);
+            if (index === -1) {
+                saved.push(postId);
+                btn.classList.remove('fa-regular'); btn.classList.add('fa-solid');
+            } else {
+                saved.splice(index, 1);
+                btn.classList.remove('fa-solid'); btn.classList.add('fa-regular');
+            }
+            localStorage.setItem('saved_db', JSON.stringify(saved));
+        }
+
+        function focusHomeComment(id) {
+            const input = document.getElementById(`input-home-${id}`);
+            if (input) input.focus();
+        }
+
+        window.deletePost = function (postId) {
+            if (confirm("Bu gönderiyi silmek istediğine emin misin?")) {
+                let posts = JSON.parse(localStorage.getItem('posts_db')) || [];
+                let newPosts = posts.filter(post => post.id != postId); // '!=' kullandık
+                localStorage.setItem('posts_db', JSON.stringify(newPosts));
+
+                // Profildeki silinenler listesi için
+                let deletedIDs = JSON.parse(localStorage.getItem('deleted_ids_db')) || [];
+                if (!deletedIDs.includes(postId)) {
+                    deletedIDs.push(postId);
+                    localStorage.setItem('deleted_ids_db', JSON.stringify(deletedIDs));
+                }
+                window.location.reload();
+            }
+        }
+    </script>
+</body>
+
+</html>

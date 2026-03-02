@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications • Nova</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CSS BAŞLANGIÇ --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: #fafafa;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: #fff;
+            border-bottom: 1px solid #dbdbdb;
+            padding: 10px 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .nav-wrapper {
+            max-width: 975px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .brand-img {
+            height: 29px;
+            margin-top: 5px;
+        }
+
+        .search-box {
+            background: #efefef;
+            width: 215px;
+            border-radius: 8px;
+            border: none;
+            padding: 8px 15px;
+            outline: none;
+            display: none;
+            /* Mobilde gizle */
+        }
+
+        @media(min-width: 650px) {
+            .search-box {
+                display: block;
+            }
+        }
+
+        .nav-items {
+            display: flex;
+            gap: 20px;
+            font-size: 22px;
+            color: #000;
+            align-items: center;
+        }
+
+        .nav-items .icon {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .nav-items .icon:hover {
+            transform: scale(1.1);
+            color: #555;
+        }
+
+        .user-profile img {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: block;
+        }
+
+        /* BİLDİRİM KUTUSU */
+        .notif-container {
+            max-width: 600px;
+            margin: 80px auto 20px;
+            background: #fff;
+            border: 1px solid #dbdbdb;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .notif-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #efefef;
+        }
+
+        .notif-header h2 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        /* LİSTE ELEMANLARI */
+        .notif-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 20px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .notif-item:hover {
+            background-color: #fafafa;
+        }
+
+        /* SOL TARAF */
+        .notif-left {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        .user-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 14px;
+            border: 1px solid #efefef;
+        }
+
+        .notif-text {
+            font-size: 14px;
+            color: #000;
+            line-height: 1.4;
+        }
+
+        .notif-text strong {
+            font-weight: 600;
+        }
+
+        .notif-text .time {
+            color: #8e8e8e;
+            font-size: 13px;
+            margin-left: 4px;
+        }
+
+        /* SAĞ TARAF (BUTON & RESİM) */
+        .notif-action {
+            min-width: 80px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        /* Buton Stili */
+        .btn-follow {
+            background-color: #0095f6;
+            color: #fff;
+            border: none;
+            padding: 7px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-follow:hover {
+            background-color: #0074cc;
+        }
+
+        /* Takip Ediliyor Stili */
+        .btn-following {
+            background-color: #efefef;
+            color: #000;
+            border: 1px solid #dbdbdb;
+        }
+
+        .btn-following:hover {
+            background-color: #dbdbdb;
+        }
+
+        /* Post Önizleme */
+        .post-preview {
+            width: 44px;
+            height: 44px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        /* Loading Yazısı */
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #999;
+        }
+
+        /* --- INSTAGRAM İKONLARI VE PROFİL EFEKTLERİ --- */
+
+        /* 1. NAVBAR İKONLARI (Ev, Mesaj, Kalp, Ekle) */
+        .nav-items i {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            /* Zıplama efekti */
+            color: #262626;
+            /* Varsayılan renk */
+            background: none;
+        }
+
+        /* İKON HOVER: RENK GEÇİŞİ, BÜYÜME VE IŞIMA */
+        .nav-items i:hover {
+            transform: scale(1.3) translateY(-2px);
+            /* Büyü ve yukarı zıpla */
+
+            /* İkonun içini Instagram Gradient Rengi Yapma (Sihirli Kısım) */
+            background: -webkit-linear-gradient(45deg, #f554a7, #820d62, #33034f, #0a7aad, #230577);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            /* Etrafına aynı tonlarda ışık yay (Glow) */
+            filter: drop-shadow(0 4px 5px rgba(2, 2, 111, 0.5));
+        }
+
+        /* 2. NAVBAR PROFİL RESMİ */
+        .nav-profile-img {
+            transition: all 0.3s ease;
+            border: 1px solid #dbdbdb;
+            /* Varsayılan ince çizgi */
+            box-sizing: border-box;
+        }
+
+        /* PROFİL HOVER: ÇERÇEVE HALKASI VE DÖNME */
+        .icon.user-profile a:hover .nav-profile-img {
+            transform: scale(1.15) rotate(5deg);
+            /* Büyü ve hafif dön */
+            border: 2px solid transparent;
+            /* Eski kenarlığı gizle */
+
+            /* Instagram Story Halkası Efekti + Işıma */
+            box-shadow:
+                0 0 0 2px #fff,
+                /* İç boşluk (beyaz) */
+                0 0 0 4px #420547,
+                /* Pembe Halka */
+                0 0 15px 2px rgba(4, 31, 80, 0.6);
+            /* Dış Işıma (Glow) */
+
+            border-radius: 50%;
+        }
+
+        /* --- NAVBAR PROFİL RESMİ STANDARDI (TÜM SAYFALAR İÇİN) --- */
+
+        /* Hem ID hem Class ile yakalıyoruz ki kaçış olmasın */
+        .navbar .icon.user-profile img,
+        .nav-profile-img,
+        #nav-profile-img {
+
+            /* 1. ÖLÇÜLER (Altın Oran: 30px) */
+            width: 30px !important;
+            height: 30px !important;
+            min-width: 30px !important;
+            /* Küçülmeyi engelle */
+            min-height: 30px !important;
+
+            /* 2. ŞEKİL (Tam Yuvarlak) */
+            border-radius: 50% !important;
+
+            /* 3. GÖRÜNTÜ (Ezilmeyi engelle - Çok önemli) */
+            object-fit: cover !important;
+
+            /* 4. ÇERÇEVE VE HİZALAMA */
+            border: 1px solid #dbdbdb !important;
+            /* İnce gri çizgi */
+            padding: 0 !important;
+            margin: 0 !important;
+            display: block !important;
+
+            /* 5. GÖLGE YOK (Temiz görünüm için) */
+            box-shadow: none;
+        }
+
+        /* Kapsayıcı kutuyu da hizalayalım ki resim kaymasın */
+        .navbar .icon.user-profile,
+        .navbar .nav-items a {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            height: auto !important;
+        }
+
+        /* --- NOVA UI BİLDİRİM GELİŞTİRMELERİ (Burası Yeni Eklenenler) --- */
+
+        /* 1. Sayfa ve Liste Açılış Animasyonu */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Kutunun gelişi */
+        .notif-container {
+            animation: slideInUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            /* Hafif derinlik */
+            overflow: hidden;
+            /* Köşelerden taşmayı engelle */
+        }
+
+        /* 2. Liste Elemanları (Satırlar) İçin Efektler */
+        .notif-item {
+            transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border-left: 3px solid transparent;
+            /* Sol çizgi için yer ayır */
+        }
+
+        .notif-item:hover {
+            background-color: #fcfaff;
+            /* Çok hafif morumsu beyaz */
+            transform: translateX(5px);
+            /* Sağa doğru hafif kayma hissi */
+            border-left: 3px solid #a033ff;
+            /* Nova Moru Çizgi */
+        }
+
+        /* 3. Profil Resimleri (Avatar) */
+        .user-avatar {
+            transition: transform 0.3s ease;
+        }
+
+        .notif-item:hover .user-avatar {
+            transform: scale(1.1);
+            /* Üzerine gelince resim biraz büyüsün */
+            border-color: #a033ff;
+            /* Çerçeve mor olsun */
+        }
+
+        /* 4. Follow Butonu (Nova Gradient) */
+        /* Sadece 'Follow' durumunda (btn-following olmayanlarda) çalışır */
+        .btn-follow:not(.btn-following) {
+            background: linear-gradient(45deg, #0095f6 0%, #a033ff 100%);
+            box-shadow: 0 4px 10px rgba(160, 51, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .btn-follow:not(.btn-following):hover {
+            box-shadow: 0 6px 15px rgba(160, 51, 255, 0.4);
+            transform: translateY(-2px);
+            /* Buton hafif yukarı kalkar */
+            background: linear-gradient(45deg, #0084db 0%, #8e2ce2 100%);
+        }
+
+        .btn-follow:active {
+            transform: translateY(1px);
+        }
+
+        /* Takip Ediliyor (Following) Butonu */
+        .btn-following {
+            transition: all 0.3s ease;
+        }
+
+        .btn-following:hover {
+            border-color: #ff3b30;
+            /* Takipten çıkma hissi için kırmızımsı border */
+            color: #ff3b30;
+            background-color: #fff;
+        }
+
+        /* 5. Sağdaki Küçük Post Önizleme Resmi */
+        .post-preview {
+            transition: transform 0.3s ease, filter 0.3s ease;
+            cursor: zoom-in;
+        }
+
+        .notif-item:hover .post-preview {
+            transform: scale(1.15) rotate(2deg);
+            /* Hafif dönerek büyüme */
+            filter: brightness(1.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 6. Yazıların Okunabilirliği */
+        .notif-text strong {
+            color: #262626;
+            transition: color 0.3s;
+        }
+
+        /* Satıra gelince kullanıcı adı Nova rengi olsun */
+        .notif-item:hover .notif-text strong {
+            color: #a033ff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="nav-logo">
+            <a href="index.html">
+                <img src="asset/image/LOGO.png" alt="Nova Logo">
+            </a>
+        </div>
+
+        <div class="nav-items">
+            <a href="index.html" class="icon">
+                <i class="fa-solid fa-house"></i>
+            </a>
+            <a href="dm.html" class="icon">
+                <i class="fa-brands fa-facebook-messenger"></i>
+            </a>
+            <a href="post.html">
+                <i class="fa-regular fa-square-plus"></i>
+            </a>
+            <a href="notification.html" class="icon" style="color:black;">
+                <i class="fa-solid fa-heart"></i>
+            </a>
+            <div class="icon user-profile">
+                <a href="profil.html">
+                    <img src="asset/image/5.jpg" alt="profil">
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <style>
+        /* Navbar Genel Kutusu */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            /* Bu özellik: Logo SOLA, İkonlar SAĞA iter */
+            align-items: center;
+            width: 100%;
+            height: 60px;
+            padding: 0 20px;
+            /* Kenarlardan boşluk */
+            background-color: white;
+            border-bottom: 1px solid #dbdbdb;
+            box-sizing: border-box;
+            position: fixed;
+            /* Sayfa kayınca üstte sabit kalsın diye */
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* Logo Ayarları */
+        .nav-logo img {
+            height: 85px;
+            /* Navbar içine sığması için küçülttüm */
+            width: auto;
+            display: block;
+            cursor: pointer;
+        }
+
+        /* Sağdaki İkonların Grubu */
+        .nav-items {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            /* İkonlar arasındaki boşluk */
+        }
+
+        /* İkonların üzerine gelince el işareti çıksın */
+        .nav-items .icon,
+        .nav-items i {
+            cursor: pointer;
+            font-size: 22px;
+            /* İkon boyutu */
+            color: black;
+            text-decoration: none;
+        }
+
+        .user-profile img {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    </style>
+
+
+
+    <div class="notif-container">
+        <div class="notif-header">
+            <h2>Notifications</h2>
+        </div>
+        <div id="notif-list-area">
+            <div class="loading">Loading notifications...</div>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. VERİLER (AYNEN KALIYOR) ---
+        const notificationsData = [
+            {
+                id: 1,
+                href: "scarlett.html",
+                user: "scarlett_anderson",
+                img: "asset/scarlett/1 (14).jpg",
+                text: "started following you.",
+                time: "2m",
+                type: "follow",
+                isFollowing: true
+            },
+            {
+                id: 2,
+                href: "james.html",
+                user: "james_hill",
+                img: "asset/image/1.jpg",
+                text: "liked your photo.",
+                time: "5m",
+                type: "like",
+                postImg: "asset/image/20.jpg"
+            },
+            {
+                id: 3,
+                href: "kayra.html",
+                user: "kayra_gultekin",
+                img: "asset/kayra/a (5).jpg",
+                text: "commented: 'Awesome shot! 🔥'",
+                time: "1h",
+                type: "comment",
+                postImg: "https://picsum.photos/200/200?random=2"
+            },
+            {
+                id: 4,
+                // href yok
+                user: "design_gloria",
+                img: "https://i.pravatar.cc/150?img=9",
+                text: "started following you.",
+                time: "3h",
+                type: "follow",
+                isFollowing: false
+            },
+            {
+                id: 5,
+                // href yok
+                user: "cute_puppy_fan",
+                img: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=200",
+                text: "liked your story.",
+                time: "1d",
+                type: "like",
+                postImg: "asset/image/o (1).jpg"
+            },
+            {
+                id: 6,
+                // href yok
+                user: "brad_jackson",
+                img: "asset/image/29.jpg",
+                text: "started following you.",
+                time: "2d",
+                type: "follow",
+                isFollowing: true
+            }
+        ];
+
+        // --- 2. HTML OLUŞTURMA (DÜZENLENDİ) ---
+        function renderNotifications() {
+            const listArea = document.getElementById("notif-list-area");
+            listArea.innerHTML = "";
+
+            notificationsData.forEach(item => {
+                let rightSideHTML = "";
+
+                // Takip mi, Beğeni mi?
+                if (item.type === "follow") {
+                    const btnClass = item.isFollowing ? "btn-follow btn-following" : "btn-follow";
+                    const btnText = item.isFollowing ? "Following" : "Follow";
+
+                    rightSideHTML = `
+                    <button class="${btnClass}" id="btn-${item.id}" onclick="toggleFollow(${item.id}, event)">
+                        ${btnText}
+                    </button>
+                `;
+                } else {
+                    rightSideHTML = `<img src="${item.postImg}" class="post-preview">`;
+                }
+
+                // --- BURASI DEĞİŞTİ ---
+                // Eğer item.href varsa onu kullan, yoksa '#' kullan.
+                const targetLink = item.href ? item.href : '#';
+
+                // onclick fonksiyonuna artık kullanıcı adını değil, linki gönderiyoruz.
+                const htmlRow = `
+                <div class="notif-item" onclick="goToLink('${targetLink}')">
+                    <div class="notif-left">
+                        <img src="${item.img}" class="user-avatar" alt="user">
+                        <div class="notif-text">
+                            <strong>${item.user}</strong> ${item.text}
+                            <span class="time">${item.time}</span>
+                        </div>
+                    </div>
+                    <div class="notif-action">
+                        ${rightSideHTML}
+                    </div>
+                </div>
+            `;
+                listArea.innerHTML += htmlRow;
+            });
+        }
+
+        // --- 3. TAKİP ET / ÇIK (AYNEN KALIYOR) ---
+        function toggleFollow(id, event) {
+            event.stopPropagation(); // Satıra tıklamayı engeller, sadece butona basar.
+
+            const btn = document.getElementById(`btn-${id}`);
+
+            if (btn.innerText === "Follow") {
+                btn.innerText = "Following";
+                btn.classList.add("btn-following");
+            } else {
+                btn.innerText = "Follow";
+                btn.classList.remove("btn-following");
+            }
+        }
+
+        // --- 4. SAYFAYA GİT (DÜZENLENDİ) ---
+        function goToLink(url) {
+            // Eğer url '#' ise veya boşsa hiçbir şey yapma
+            if (url && url !== '#') {
+                window.location.href = url;
+            } else {
+                console.log("Bu kullanıcının profili henüz bağlı değil.");
+            }
+        }
+
+        window.onload = renderNotifications;
+
+    </script>
+</body>
+
+</html>

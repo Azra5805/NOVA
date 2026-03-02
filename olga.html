@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merry Olga • Instagram</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- RESET VE TEMEL AYARLAR --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: #fafafa;
+            overflow-y: scroll;
+            scroll-behavior: smooth;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: #2900f6;
+        }
+
+        /* --- ANİMASYONLAR --- */
+        @keyframes heartBeat {
+            0% {
+                transform: scale(1);
+            }
+
+            25% {
+                transform: scale(1.2);
+            }
+
+            50% {
+                transform: scale(0.95);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .comment-like-heart.fa-solid {
+            animation: heartBeat 0.3s ease-in-out;
+        }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            background: #fff;
+            border-bottom: 1px solid #dbdbdb;
+            padding: 0 20px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 60px;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo img {
+            height: 85px;
+            width: auto;
+            display: block;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        .nav-items {
+            display: flex;
+            gap: 22px;
+            align-items: center;
+        }
+
+        .nav-items a i {
+            transition: transform 0.2s, color 0.2s;
+            font-size: 22px;
+            color: black;
+            cursor: pointer;
+        }
+
+        .nav-items a i:hover {
+            transform: scale(1.15);
+            color: #7c17bb;
+        }
+
+        /* Navbar Profil Resmi */
+        .user-profile img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid #dbdbdb;
+            cursor: pointer;
+        }
+
+        .user-profile img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 8px rgba(152, 0, 246, 0.5);
+        }
+
+        /* --- PROFİL HEADER --- */
+        .profile-main {
+            max-width: 935px;
+            margin: 80px auto 30px;
+            padding: 0 20px;
+        }
+
+        .profile-header {
+            display: flex;
+            margin-bottom: 40px;
+        }
+
+        .profile-pic-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            margin-right: 30px;
+        }
+
+        .profile-pic-hd {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid #dbdbdb;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .profile-pic-hd:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(225, 48, 108, 0.4), 0 0 25px rgba(253, 29, 29, 0.3);
+        }
+
+        .profile-info {
+            flex: 2;
+        }
+
+        .title-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .profile-name {
+            font-size: 28px;
+            font-weight: 300;
+        }
+
+        /* Butonlar */
+        .edit-btn,
+        .btn-follow {
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .edit-btn {
+            background: transparent;
+            border: 1px solid #dbdbdb;
+            border-radius: 4px;
+            padding: 5px 9px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .btn-follow {
+            background-color: #0095f6;
+            color: #fff;
+            border: none;
+            padding: 5px 20px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .edit-btn:hover {
+            background: #fafafa;
+            border-color: #0095f6;
+            color: #0095f6;
+        }
+
+        .btn-follow:hover {
+            background-color: #0074cc;
+        }
+
+        /* İstatistikler ve Bio */
+        .stats-row {
+            display: flex;
+            list-style: none;
+            margin-bottom: 20px;
+            gap: 40px;
+            font-size: 16px;
+        }
+
+        .stats-row li span {
+            font-weight: 600;
+        }
+
+        .bio-section {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .bio-name {
+            font-weight: 600;
+        }
+
+        /* Sekmeler */
+        .tabs-container {
+            border-top: 1px solid #dbdbdb;
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: #8e8e8e;
+            font-weight: 600;
+        }
+
+        .tab {
+            padding-top: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tab:hover {
+            color: #262626;
+        }
+
+        .tab.active {
+            color: #000;
+            border-top: 1px solid #000;
+            margin-top: -1px;
+        }
+
+        /* --- POST GALERİSİ --- */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+            margin-top: 20px;
+        }
+
+        .grid-item {
+            position: relative;
+            cursor: pointer;
+            aspect-ratio: 1 / 1;
+            background: #efefef;
+            overflow: hidden;
+        }
+
+        .grid-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s;
+        }
+
+        .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            color: #fff;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .grid-item:hover .grid-overlay {
+            opacity: 1;
+        }
+
+        .grid-item:hover img {
+            transform: scale(1.08);
+        }
+
+        /* --- MODAL (POPUP) --- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(3px);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: auto;
+            width: 90%;
+            max-width: 1000px;
+            height: 85vh;
+            display: flex;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-left {
+            flex: 1.5;
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-left img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .modal-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+            border-left: 1px solid #efefef;
+        }
+
+        .modal-header {
+            padding: 15px;
+            border-bottom: 1px solid #efefef;
+            display: flex;
+            align-items: center;
+            height: 60px;
+            flex-shrink: 0;
+        }
+
+        .modal-pp,
+        .comment-pp {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            margin-right: 10px;
+            object-fit: cover;
+            border: 1px solid #efefef;
+        }
+
+        .modal-username {
+            font-weight: 600;
+            font-size: 14px;
+            color: #262626;
+        }
+
+        #modal-comments-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+        }
+
+        .comment-item {
+            display: flex;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        .comment-content {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .comment-text {
+            color: #262626;
+            line-height: 1.3;
+        }
+
+        .comment-like-heart {
+            font-size: 12px;
+            margin-top: 5px;
+            cursor: pointer;
+            color: #8e8e8e;
+            margin-left: auto;
+        }
+
+        .modal-actions {
+            border-top: 1px solid #dbdbdb;
+            padding: 16px;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .action-icons {
+            display: flex;
+            align-items: center;
+        }
+
+        .action-icons i {
+            font-size: 26px;
+            margin-right: 18px;
+            cursor: pointer;
+            color: #262626;
+        }
+
+        .action-icons i:hover {
+            color: #555;
+        }
+
+        .action-icons i.fa-solid.fa-heart {
+            color: #ed4956;
+        }
+
+        .like-count {
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .post-time {
+            color: #8e8e8e;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .add-comment-box {
+            display: flex;
+            align-items: center;
+            border-top: 1px solid #efefef;
+            padding-top: 18px;
+            margin-top: 6px;
+        }
+
+        .add-comment-box input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            padding: 4px 0;
+        }
+
+        .add-comment-box button {
+            background: none;
+            border: none;
+            color: #0095f6;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            padding-left: 12px;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            color: #fff;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        @media(max-width: 768px) {
+            .modal-content {
+                flex-direction: column;
+                height: 90vh;
+            }
+
+            .modal-left {
+                height: 40%;
+            }
+
+            .modal-right {
+                height: 60%;
+            }
+
+            .profile-header {
+                flex-direction: column;
+            }
+
+            .profile-pic-container {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+
+            .nav-items {
+                gap: 15px;
+            }
+
+            .search-box {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-logo">
+            <a href="index.html">
+                <img src="asset/image/LOGO.png" alt="Nova Logo">
+            </a>
+        </div>
+
+        <div class="nav-items">
+            <a href="index.html" class="icon">
+                <i class="fa-solid fa-house"></i>
+            </a>
+            <a href="dm.html" class="icon">
+                <i class="fa-brands fa-facebook-messenger"></i>
+            </a>
+            <a href="post.html">
+                <i class="fa-regular fa-square-plus"></i>
+            </a>
+            <a href="notification.html" class="icon" style="color:black;">
+                <i class="fa-solid fa-heart"></i>
+            </a>
+            <div class="icon user-profile">
+                <a href="profil.html">
+                    <img src="asset/image/5.jpg" alt="profil">
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="profile-main">
+        <header class="profile-header">
+            <div class="profile-pic-container">
+                <img src="" class="profile-pic-hd" id="header-profile-img" alt="Profile Picture">
+            </div>
+            <div class="profile-info">
+                <div class="title-row">
+                    <h2 class="profile-name" id="username-display">Loading...</h2>
+                    <div id="action-buttons"></div>
+                    <i class="fa-solid fa-gear" style="font-size: 20px; cursor: pointer; margin-left:10px;"></i>
+                </div>
+                <ul class="stats-row">
+                    <li><span id="post-count">0</span> Posts</li>
+                    <li><span id="follower-count">0</span> Followers</li>
+                    <li><span id="following-count">0</span> Following</li>
+                </ul>
+                <div class="bio-section">
+                    <span class="bio-name" id="fullname-display"></span><br>
+                    <div id="bio-text"></div>
+                    <a href="#" id="bio-link" style="color: #00376b; text-decoration: none; font-weight: 600;"></a>
+                </div>
+            </div>
+        </header>
+
+        <div class="tabs-container">
+            <div class="tab active" onclick="switchTab('posts')"><i class="fa-solid fa-table-cells"></i> POSTS</div>
+            <div class="tab" onclick="switchTab('saved')"><i class="fa-regular fa-bookmark"></i> SAVED</div>
+            <div class="tab" onclick="switchTab('tagged')"><i class="fa-solid fa-user-tag"></i> TAGGED</div>
+        </div>
+
+        <div id="gallery-posts" class="photo-grid"></div>
+        <div id="gallery-saved" class="photo-grid hidden" style="display:none;"></div>
+        <div id="gallery-tagged" class="photo-grid hidden" style="display:none;"></div>
+    </main>
+
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div class="modal-content">
+            <div class="modal-left">
+                <img id="modal-img" src="" alt="Post">
+            </div>
+            <div class="modal-right">
+                <div class="modal-header">
+                    <img id="modal-user-img" src="" class="modal-pp">
+                    <span class="modal-username" id="modal-username"></span>
+                </div>
+                <div id="modal-comments-list"></div>
+
+                <div class="modal-actions">
+                    <div class="action-icons">
+                        <i id="modal-like-btn" class="fa-regular fa-heart"></i>
+                        <i id="modal-comment-btn" class="fa-regular fa-comment"></i>
+                    </div>
+                    <span class="like-count" id="modal-like-count">0 likes</span>
+                    <span class="post-time">SOMETIMES AGO</span>
+                    <div class="add-comment-box">
+                        <input type="text" id="comment-input" placeholder="Add a comment...">
+                        <button onclick="postNewComment()">Post</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let activePostData = null;
+
+        // VERİTABANI (Merry Olga)
+        const database = {
+            "Merry Olga": {
+                username: "merry_olga", // Kullanıcı adını küçük harf ve alt tire ile standartlaştırdım
+                fullName: "Merry Olga",
+                profilePic: "asset/image/olga.jpg",
+                bio: "Model / Actress 🎬<br>",
+                link: "vogue.com",
+                stats: { posts: 4, followers: "8,908", following: "4,654" },
+                isOwner: false,
+                posts: [
+                    {
+                        id: 201,
+                        img: "asset/olga/1 (1).jpg",
+                        likes: 4200,
+                        comments: [
+                            { user: "vogue_editor", text: "Stunning as always! Cover material. 💫", userPic: "https://randomuser.me/api/portraits/women/65.jpg" },
+                            { user: "photographer_mike", text: "The lighting here is perfect. Great pose.", userPic: "https://randomuser.me/api/portraits/men/32.jpg" }
+                        ]
+                    },
+                    {
+                        id: 202,
+                        img: "asset/olga/1 (2).jpg",
+                        likes: 3150,
+                        comments: [
+                            { user: "jameshill", text: "Elegant.", userPic: "asset/james/1.jpg" },
+                            { user: "fashion_daily", text: "That outfit is everything! Where is it from?", userPic: "https://randomuser.me/api/portraits/women/44.jpg" }
+                        ]
+                    },
+                    {
+                        id: 203,
+                        img: "asset/olga/1 (8).jpg",
+                        likes: 2430,
+                        comments: [
+                            { user: "kayra_gultekin", text: "Looking good!", userPic: "asset/kayra/a (5).jpg" }
+                        ]
+                    },
+                    {
+                        id: 204,
+                        img: "asset/olga/1 (4).jpg",
+                        likes: 5980,
+                        comments: [
+                            { user: "makeup_artist_jen", text: "Loved working on this look with you! 💄", userPic: "https://randomuser.me/api/portraits/women/28.jpg" },
+                            { user: "emrecelik", text: "Wonderful colors!", userPic: "asset/image/5.jpg" }
+                        ]
+                    },
+                    {
+                        id: 205,
+                        img: "asset/olga/1 (7).jpg",
+                        likes: 1500,
+                        comments: [
+                            { user: "travel_blogger_kate", text: "This location suits you so well.", userPic: "https://randomuser.me/api/portraits/women/61.jpg" }
+                        ]
+                    },
+                    {
+                        id: 206,
+                        img: "asset/olga/1 (7).jpg",
+                        likes: 6100,
+                        comments: [
+                            { user: "dance_academy", text: "Graceful movements! 💃", userPic: "https://randomuser.me/api/portraits/lego/6.jpg" },
+                            { user: "jameshill", text: "Art in motion.", userPic: "asset/james/1.jpg" }
+                        ]
+                    }
+                ]
+            }
+        };
+
+        document.addEventListener("DOMContentLoaded", () => {
+            // URL'den kullanıcı çekme veya varsayılan olarak Merry Olga'yı ayarlama
+            const urlParams = new URLSearchParams(window.location.search);
+            // Varsayılan anahtarı 'Merry Olga' yapıyoruz
+            let userKey = "Merry Olga";
+
+            let userData = database[userKey];
+
+            // --- LOCALSTORAGE İŞLEMLERİ ---
+            try {
+                // 1. LocalStorage'dan postları çek
+                const localPosts = JSON.parse(localStorage.getItem('posts_db')) || [];
+
+                // 2. Bu profile ait olan postları bul (Yeni eklenenler varsa)
+                // Dikkat: Kullanıcı adı eşleşmesine bakıyoruz
+                const myNewPosts = localPosts.filter(p =>
+                    p.user?.name === userData.username
+                );
+
+                const formattedNewPosts = myNewPosts.map(p => ({
+                    id: p.id,
+                    img: p.img,
+                    likes: p.likes || 0,
+                    isLiked: p.likesList && p.likesList.includes('me'),
+                    comments: p.comments || []
+                }));
+
+                // 3. Veritabanındaki sabit postlarla LocalStorage'dan gelenleri birleştir
+                // (Önce sabitler, sonra yeniler gelsin istiyorsan sırayı değiştirebilirsin)
+                // Burada duplicate (tekrar eden) postları engellemek için filtreleme yapabiliriz ama şimdilik basit tutalım.
+                userData.posts = [...formattedNewPosts, ...userData.posts];
+
+                // 4. Silinenleri Filtrele
+                const deletedIDs = JSON.parse(localStorage.getItem('deleted_ids_db')) || [];
+                userData.posts = userData.posts.filter(post => !deletedIDs.includes(post.id));
+
+                // 5. İstatistikleri Güncelle
+                userData.stats.posts = userData.posts.length;
+
+            } catch (error) {
+                console.error("LocalStorage hatası:", error);
+            }
+
+            renderProfile(userData);
+        });
+
+        function renderProfile(user) {
+            document.getElementById("username-display").innerText = user.username;
+
+            const headerImg = document.getElementById("header-profile-img");
+            headerImg.src = user.profilePic;
+            headerImg.onerror = function () { this.src = 'https://via.placeholder.com/150'; };
+
+            document.getElementById("post-count").innerText = user.stats.posts;
+
+            document.getElementById("following-count").innerText = user.stats.following;
+            document.getElementById("fullname-display").innerText = user.fullName;
+            document.getElementById("bio-text").innerHTML = user.bio;
+            document.getElementById("bio-link").innerText = user.link;
+
+            // --- TAKİPÇİ SAYISI VE BUTON AYARLARI ---
+            const actionBtnContainer = document.getElementById("action-buttons");
+            const followerCountSpan = document.getElementById("follower-count");
+
+            // 1. Hafızadan takip edilenler listesini çek
+            let followingList = JSON.parse(localStorage.getItem('following_db')) || [];
+
+            // 2. Bu profili (user.username) takip ediyor muyuz?
+            let isFollowing = followingList.includes(user.username);
+
+            // 3. Takipçi sayısını ayarla (String içindeki virgülü temizleyip sayı yapıyoruz)
+            let baseCount = parseInt(user.stats.followers.toString().replace(/,/g, ''));
+
+            // Eğer takip ediyorsak sayı 1 fazla görünsün, etmiyorsak normal kalsın
+            let displayCount = isFollowing ? baseCount + 1 : baseCount;
+            followerCountSpan.innerText = displayCount.toLocaleString();
+
+            // 4. Butonları Ayarla
+            if (user.isOwner) {
+                actionBtnContainer.innerHTML = `<button class="edit-btn">Edit Profile</button>`;
+            } else {
+                if (isFollowing) {
+                    actionBtnContainer.innerHTML = `
+                        <button class="btn-follow" 
+                                onclick="toggleFollow(this, '${user.username}')"
+                                style="background-color: #fff; color: #000; border: 1px solid #dbdbdb;">
+                            Following
+                        </button>
+                        <button class="edit-btn">Message</button>`;
+                } else {
+                    actionBtnContainer.innerHTML = `
+                        <button class="btn-follow" 
+                                onclick="toggleFollow(this, '${user.username}')"
+                                style="background-color: #0095f6; color: #fff; border: none;">
+                            Follow
+                        </button>
+                        <button class="edit-btn">Message</button>`;
+                }
+            }
+
+            const gallery = document.getElementById("gallery-posts");
+            gallery.innerHTML = "";
+
+            user.posts.forEach(post => {
+                const div = document.createElement("div");
+                div.className = "grid-item";
+                div.innerHTML = `
+                    <img src="${post.img}" alt="post">
+                    <div class="grid-overlay">
+                        <i class="fa-solid fa-heart"></i> ${post.likes}
+                    </div>`;
+                div.onclick = () => openModal(post, user);
+                gallery.appendChild(div);
+            });
+        }
+
+        // --- TAKİP FONKSİYONU (DÜZELTİLMİŞ) ---
+        function toggleFollow(btn, targetUsername) {
+            let followingList = JSON.parse(localStorage.getItem('following_db')) || [];
+            const countSpan = document.getElementById("follower-count");
+
+            // GARANTİ YÖNTEM: Sayı harici (nokta, virgül, boşluk) her şeyi temizle
+            let currentCount = parseInt(countSpan.innerText.replace(/[^0-9]/g, ''));
+
+            if (followingList.includes(targetUsername)) {
+                // UNFOLLOW (Takipten Çık)
+                followingList = followingList.filter(u => u !== targetUsername);
+
+                btn.innerText = "Follow";
+                btn.style.backgroundColor = "#0095f6";
+                btn.style.color = "#fff";
+                btn.style.border = "none";
+
+                currentCount--; // Azalt
+            } else {
+                // FOLLOW (Takip Et)
+                followingList.push(targetUsername);
+
+                btn.innerText = "Following";
+                btn.style.backgroundColor = "#fff";
+                btn.style.color = "#000";
+                btn.style.border = "1px solid #dbdbdb";
+
+                currentCount++; // Artır
+            }
+
+            localStorage.setItem('following_db', JSON.stringify(followingList));
+            countSpan.innerText = currentCount.toLocaleString();
+        }
+
+        // --- MODAL İŞLEMLERİ ---
+        function openModal(postData, userData) {
+            activePostData = postData;
+            const modal = document.getElementById("imageModal");
+            document.getElementById("modal-img").src = postData.img;
+            document.getElementById("modal-username").innerText = userData.username;
+            document.getElementById("modal-user-img").src = userData.profilePic;
+
+            const likeCountSpan = document.getElementById("modal-like-count");
+            likeCountSpan.innerText = postData.likes + " likes";
+
+            const likeBtn = document.getElementById("modal-like-btn");
+            if (postData.isLiked) {
+                likeBtn.className = "fa-solid fa-heart";
+                likeBtn.style.color = "#ed4956";
+            } else {
+                likeBtn.className = "fa-regular fa-heart";
+                likeBtn.style.color = "#262626";
+            }
+
+            likeBtn.onclick = function () {
+                if (likeBtn.classList.contains("fa-regular")) {
+                    likeBtn.classList.remove("fa-regular");
+                    likeBtn.classList.add("fa-solid");
+                    likeBtn.style.color = "#ed4956";
+                    postData.likes++;
+                    postData.isLiked = true;
+                } else {
+                    likeBtn.classList.remove("fa-solid");
+                    likeBtn.classList.add("fa-regular");
+                    likeBtn.style.color = "#262626";
+                    postData.likes--;
+                    postData.isLiked = false;
+                }
+                likeCountSpan.innerText = postData.likes + " likes";
+            };
+
+            document.getElementById("modal-comment-btn").onclick = () => document.getElementById("comment-input").focus();
+            renderComments(postData.comments);
+
+            const input = document.getElementById("comment-input");
+            input.value = "";
+            input.onkeypress = (e) => { if (e.key === "Enter") postNewComment(); };
+
+            const header = document.querySelector(".modal-header");
+            const oldDelete = document.getElementById("delete-post-btn");
+            if (oldDelete) oldDelete.remove();
+
+            if (userData.isOwner) {
+                const deleteBtn = document.createElement("i");
+                deleteBtn.id = "delete-post-btn";
+                deleteBtn.className = "fa-solid fa-trash";
+                deleteBtn.style.color = "#ed4956";
+                deleteBtn.style.marginLeft = "auto";
+                deleteBtn.style.cursor = "pointer";
+                deleteBtn.onclick = () => deletePost(postData.id);
+                header.appendChild(deleteBtn);
+            }
+            modal.style.display = "block";
+        }
+
+        function deletePost(postId) {
+            if (confirm("Are you sure you want to delete this post?")) {
+                let localPosts = JSON.parse(localStorage.getItem('posts_db')) || [];
+                let newPosts = localPosts.filter(p => p.id !== postId);
+                localStorage.setItem('posts_db', JSON.stringify(newPosts));
+
+                let deletedIDs = JSON.parse(localStorage.getItem('deleted_ids_db')) || [];
+                if (!deletedIDs.includes(postId)) {
+                    deletedIDs.push(postId);
+                    localStorage.setItem('deleted_ids_db', JSON.stringify(deletedIDs));
+                }
+
+                alert("Post deleted!");
+                closeModal();
+                window.location.reload();
+            }
+        }
+
+        function renderComments(commentsArray) {
+            const commentsList = document.getElementById("modal-comments-list");
+            commentsList.innerHTML = "";
+
+            if (commentsArray && commentsArray.length > 0) {
+                commentsArray.forEach(comment => {
+                    const commentDiv = document.createElement("div");
+                    commentDiv.className = "comment-item";
+                    let imgNumber = 12;
+                    if (comment.user) {
+                        imgNumber = (comment.user.length * 7) % 70 + 1;
+                    }
+                    const ppUrl = comment.userPic ? comment.userPic : `https://i.pravatar.cc/150?img=${imgNumber}`;
+                    const userName = comment.user || "User";
+
+                    commentDiv.innerHTML = `
+                        <img src="${ppUrl}" class="comment-pp">
+                        <div class="comment-content">
+                            <span class="comment-text"><strong>${userName}</strong> ${comment.text}</span>
+                        </div>
+                        <i class="fa-regular fa-heart comment-like-heart" onclick="toggleCommentLike(this)"></i>
+                    `;
+                    commentsList.appendChild(commentDiv);
+                });
+            } else {
+                commentsList.innerHTML = "<p style='color:#999; text-align:center; margin-top:20px;'>No comments yet.</p>";
+            }
+        }
+
+        function postNewComment() {
+            const input = document.getElementById("comment-input");
+            const newText = input.value;
+            if (newText.trim() !== "" && activePostData) {
+                const newComment = {
+                    user: "kodinnggg",
+                    userPic: "asset/image/5.jpg",
+                    text: newText
+                };
+                activePostData.comments.push(newComment);
+                renderComments(activePostData.comments);
+                input.value = "";
+            }
+        }
+
+        function toggleCommentLike(btn) {
+            btn.classList.toggle("fa-regular");
+            btn.classList.toggle("fa-solid");
+            btn.style.color = btn.classList.contains("fa-solid") ? "#ed4956" : "#8e8e8e";
+        }
+
+        function closeModal() {
+            document.getElementById("imageModal").style.display = "none";
+        }
+
+        window.onclick = (event) => {
+            if (event.target == document.getElementById("imageModal")) closeModal();
+        }
+
+        function switchTab(tabName) {
+            document.getElementById("gallery-posts").style.display = "none";
+            document.getElementById("gallery-saved").style.display = "none";
+            document.getElementById("gallery-tagged").style.display = "none";
+
+            document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+
+            if (tabName === 'posts') {
+                document.getElementById("gallery-posts").style.display = "grid";
+                document.querySelector(".tab:nth-child(1)").classList.add("active");
+            } else if (tabName === 'saved') {
+                document.getElementById("gallery-saved").style.display = "grid";
+                document.querySelector(".tab:nth-child(2)").classList.add("active");
+            } else if (tabName === 'tagged') {
+                document.getElementById("gallery-tagged").style.display = "grid";
+                document.querySelector(".tab:nth-child(3)").classList.add("active");
+            }
+        }
+    </script>
+</body>
+
+</html>

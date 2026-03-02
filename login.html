@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login • Instagram</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap" rel="stylesheet">
+</head>
+
+<body class="login-page">
+
+    <div class="auth-container">
+
+        <div class="auth-box-wrapper" id="login-form">
+            <div class="auth-box">
+                <img src="asset/image/LOGO.png" alt="Logo" class="login-logo">
+
+                <form action="/api/login" method="POST">
+                    <div class="input-group">
+                        <input type="text" name="username" placeholder="Phone number, username, or email" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" name="password" placeholder="Password" required>
+                    </div>
+
+                    <button type="submit" class="auth-btn">Log in</button>
+                </form>
+
+                <div class="auth-divider">
+                    <div class="line"></div>
+                    <p>OR</p>
+                    <div class="line"></div>
+                </div>
+
+                <a href="/api/auth/google" class="google-login">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="20px" height="20px">
+                        <path fill="#FFC107"
+                            d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z" />
+                        <path fill="#FF3D00"
+                            d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z" />
+                        <path fill="#4CAF50"
+                            d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.221,0-9.652-3.343-11.303-8l-6.571,4.827C9.656,39.663,16.318,44,24,44z" />
+                        <path fill="#1976D2"
+                            d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z" />
+                    </svg>
+                    <span>Log in with Google</span>
+                </a>
+
+                <a href="forgot-password.html" class="forgot-pass">Forgot password?</a>
+            </div>
+
+            <div class="auth-box alt-box">
+                <p>Don't have an account? <span onclick="toggleForms()">Sign up</span></p>
+            </div>
+        </div>
+
+        <div class="auth-box-wrapper hidden" id="register-form">
+            <div class="auth-box">
+                <img src="asset/image/LOGO.png" alt="Logo" class="login-logo">
+                <h2 class="auth-subtitle">Sign up to see photos and videos from your friends.</h2>
+
+                <a href="/api/auth/google" class="google-login">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="20px" height="20px">
+                        <path fill="#FFC107"
+                            d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z" />
+                        <path fill="#FF3D00"
+                            d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z" />
+                        <path fill="#4CAF50"
+                            d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.221,0-9.652-3.343-11.303-8l-6.571,4.827C9.656,39.663,16.318,44,24,44z" />
+                        <path fill="#1976D2"
+                            d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z" />
+                    </svg>
+                    <span>Log in with Google</span>
+                </a>
+
+                <div class="auth-divider">
+                    <div class="line"></div>
+                    <p>OR</p>
+                    <div class="line"></div>
+                </div>
+
+                <form action="/api/register" method="POST">
+                    <div class="input-group">
+                        <input type="email" name="email" placeholder="Email" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" name="fullname" placeholder="Full Name" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" name="username" placeholder="Username" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" name="password" placeholder="Password" required>
+                    </div>
+
+                    <p class="terms">
+                        By signing up, you agree to our Terms, Data Policy and Cookies Policy.
+                    </p>
+
+                    <button type="submit" class="auth-btn">Sign up</button>
+                </form>
+            </div>
+
+            <div class="auth-box alt-box">
+                <p>Have an account? <span onclick="toggleForms()">Log in</span></p>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
+
+<style>
+    /* === GİRİŞ / KAYIT SAYFASI STİLLERİ === */
+
+    .login-page {
+        background-color: #fafafa;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    .auth-container {
+        width: 350px;
+        margin-top: 30px;
+    }
+
+    .auth-box {
+        background: #fff;
+        border: 1px solid #dbdbdb;
+        padding: 30px 40px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .auth-logo {
+        font-family: 'Grand Hotel', cursive;
+        font-size: 3rem;
+        margin: 10px 0 30px;
+    }
+
+    .auth-subtitle {
+        color: #8e8e8e;
+        font-size: 17px;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    /* Input Alanları */
+    .input-group input {
+        width: 100%;
+        background: #fafafa;
+        border: 1px solid #dbdbdb;
+        border-radius: 3px;
+        padding: 9px 8px;
+        margin-bottom: 6px;
+        box-sizing: border-box;
+        font-size: 12px;
+    }
+
+    .input-group input:focus {
+        border: 1px solid #a8a8a8;
+        outline: none;
+    }
+
+    /* Mavi Butonlar */
+    .auth-btn {
+        background-color: #0095f6;
+        border: none;
+        border-radius: 4px;
+        color: #fff;
+        font-weight: 600;
+        width: 100%;
+        padding: 7px;
+        margin-top: 10px;
+        cursor: pointer;
+    }
+
+    .auth-btn:hover {
+        background-color: #1877f2;
+    }
+
+    /* Ayırıcı Çizgiler */
+    .auth-divider {
+        display: flex;
+        align-items: center;
+        margin: 20px 0;
+    }
+
+    .auth-divider .line {
+        flex-grow: 1;
+        height: 1px;
+        background: #dbdbdb;
+    }
+
+    .auth-divider p {
+        margin: 0 10px;
+        color: #8e8e8e;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    /* Linkler */
+    .google-login {
+        display: flex;
+        /* İkon ve yazıyı yan yana hizalar */
+        align-items: center;
+        /* Dikeyde ortalar */
+        justify-content: center;
+        /* Yatayda ortalar */
+        text-decoration: none;
+        /* Alt çizgiyi kaldırır */
+        margin-top: 20px;
+        gap: 8px;
+        /* İkon ile yazı arasındaki boşluk */
+        color: #385185;
+        /* Yazı rengi (Koyu mavi tonu) */
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    /* Mouse ile üzerine gelince hafif bir efekt */
+    .google-login:hover {
+        opacity: 0.8;
+    }
+
+    /* Yazı rengini Instagram stiline uygun koyu gri yapmak istersen:
+   color: #385185; yerine color: #262626; yapabilirsin. */
+
+    .forgot-pass {
+        display: block;
+        font-size: 12px;
+        color: #00376b;
+        text-decoration: none;
+        margin-top: 15px;
+    }
+
+    .alt-box p {
+        margin: 0;
+        font-size: 14px;
+    }
+
+    .alt-box span {
+        color: #0095f6;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .terms {
+        font-size: 12px;
+        color: #8e8e8e;
+        margin: 15px 0;
+        line-height: 1.4;
+    }
+
+    /* Gizleme Sınıfı */
+    .hidden {
+        display: none;
+    }
+</style>
+
+<script>
+    // Giriş ve Kayıt ekranları arasında geçiş yapma fonksiyonu
+    function toggleForms() {
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+
+        if (loginForm.classList.contains('hidden')) {
+            loginForm.classList.remove('hidden');
+            registerForm.classList.add('hidden');
+        } else {
+            loginForm.classList.add('hidden');
+            registerForm.classList.remove('hidden');
+        }
+    }
+</script>
